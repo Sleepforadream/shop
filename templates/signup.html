@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Рубрики
+{% endblock %}
+
+{% block body %}
+<body class="text-center">
+
+<main class="signup-form">
+    {% if error != "" %}
+    <div class="error-register-block">
+        <p class="error-register">{{ error }}</p>
+    </div>
+    {% endif %}
+    <form method="post" class="main-form" enctype="multipart/form-data">
+        <img class="login-logo-image" src="/static/img/NEWS BLOG_free-file (1).png" alt="logo" width="140" height="44">
+        <h1 class="login-title">Введите данные для регистрации</h1>
+        <div class="login-form">
+            <input type="text" class="login-form-control" id="floatingName" name="floatingName" placeholder="Имя">
+            <label for="floatingName">Имя</label>
+        </div>
+        <div class="login-form">
+            <input type="email" class="login-form-control" id="floatingInput" name="floatingInput"
+                   placeholder="имя@пример.com">
+            <label for="floatingInput">Электронная почта</label>
+        </div>
+        <div class="login-form">
+            <input type="password" class="login-form-control" id="floatingPassword" name="floatingPassword"
+                   placeholder="Пароль">
+            <label for="floatingPassword">Пароль</label>
+        </div>
+        <div class="login-form">
+            <input type="password" class="login-form-control" id="floatingPassword2" name="floatingPassword2"
+                   placeholder="Повторите пароль">
+            <label for="floatingPassword2">Повторите пароль</label>
+        </div>
+        <br>
+        <button class="w-100 btn btn-lg btn-warning" type="submit">Зарегистрироваться</button>
+        <hr>
+        <p>Уже есть учётная запись? <a href="/login">Войти</a></p>
+        <p class="mt-5 mb-3 text-muted">© 2022</p>
+    </form>
+</main>
+
+
+{% endblock %}

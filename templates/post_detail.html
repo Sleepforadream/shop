@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ article.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+
+    <div class="blog-implementation">
+        <p class="blog-img" role="img">
+            <img src='/{{ article.imgpath }}'>
+        </p>
+        <hr>
+        <h2><em>من {{ article.title }}</em></h2>
+        <hr>
+        <p class="blog-intro"> {{ article.date.strftime("%d %B %Y") }} автор <u>Марк</u></p>
+        <h5><em>"{{ article.intro}}"</em></h5>
+        <hr>
+        <p class="blog-text"> {{ article.text }}</p>
+        <p class="blog-heading" ><b>Рубрика: <u>{{ article.heading }}</u></b> </p>
+        <p><b>Дата: {{ article.date.date() }}</b></p>
+        <a href="/posts/{{ article.id }}/delete" class="btn btn-danger">Удалить</a>
+        <a href="/posts/{{ article.id }}/update" class="btn btn-success">Редактирование</a>
+    </div>
+</div>
+{% endblock %}

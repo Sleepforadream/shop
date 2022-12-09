@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Рубрики
+{% endblock %}
+
+{% block body %}
+<body class="text-center">
+
+<main class="signin-form">
+    <form method="post" enctype="multipart/form-data">
+        <img class="login-logo-image" src="/static/img/NEWS BLOG_free-file (1).png" alt="logo" width="140" height="44">
+        <h1 class="login-title">Пожалуйста войдите</h1>
+
+        <div class="login-form">
+            <input type="email" class="login-form-control" name="floatingInput" id="floatingInput" placeholder="имя@пример.com">
+            <label for="floatingInput">Электронная почта</label>
+        </div>
+        <div class="login-form">
+            <input type="password" class="login-form-control" name="floatingPassword" id="floatingPassword" placeholder="Пароль">
+            <label for="floatingPassword">Пароль</label>
+        </div>
+        <div class="login-checkbox">
+            <label>
+                <input type="checkbox" value="rememberme" name="rememberme" id="rememberme">  Запомнить меня
+            </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-warning" type="submit">Войти</button>
+        <hr>
+        <p>Ещё нет учётной записи? <a href="/signup">Регистрация</a></p>
+        <p class="mt-5 mb-3 text-muted">© 2022</p>
+    </form>
+</main>
+
+
+{% endblock %}
