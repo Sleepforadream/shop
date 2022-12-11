@@ -20,4 +20,4 @@ def add_column(database_name, table_name, column_name, data_type):
     connection.close()
 
 
-add_column("blog.db", "authorization", "date", "Date")
+add_column("blog.db", "authorization", "info", "String")

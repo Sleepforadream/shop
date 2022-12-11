@@ -8,6 +8,11 @@
 <body class="text-center">
 
 <main class="signin-form">
+    {% if error != "" %}
+    <div class="error-register-block">
+        <p class="error-register">{{ error }}</p>
+    </div>
+    {% endif %}
     <form method="post" enctype="multipart/form-data">
         <img class="login-logo-image" src="/static/img/NEWS BLOG_free-file (1).png" alt="logo" width="140" height="44">
         <h1 class="login-title">Пожалуйста войдите</h1>

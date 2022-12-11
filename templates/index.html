@@ -35,6 +35,7 @@
                 <div class="index-card-text">
                     <strong class="d-inline-block mb-2 text-primary">{{ article1.heading }}</strong>
                     <h3 class="mb-0">{{ article1.title }}</h3>
+                    <p class="intro-author"> Автор: {{ article1.author }}</p>
                     <div class="mb-1 text-muted">{{ article1.date.date() }}</div>
                     <p class="text-index-preview-card">{{ article1.intro }}</p>
                     <a href="/posts/{{ article1.id }}" class="stretched-link">Детальнее</a>
@@ -50,6 +51,7 @@
                 <div class="index-card-text">
                     <strong class="d-inline-block mb-2 text-success">{{ article2.heading }}</strong>
                     <h3 class="mb-0">{{ article2.title }}</h3>
+                    <p class="intro-author"> Автор: {{ article2.author }}</p>
                     <div class="mb-1 text-muted">{{ article1.date.date() }}</div>
                     <p class="text-index-preview-card">{{ article2.intro }}</p>
                     <a href="/posts/{{ article2.id }}" class="stretched-link">Детальнее</a>
@@ -62,16 +64,17 @@
         </div>
     </div>
     {% endif %}
+
     <div class="row">
         <div class="col-md-8">
             <h3 class="pb-4 mb-4 fst-italic border-bottom">
                 من Популярное
             </h3>
-
+            {% if articles|length > 0 %}
             <article class="blog-post">
                 <h2 class="blog-post-title mb-1"><em>{{ article1.title }}</em></h2>
                 <br>
-                <p class="blog-post-meta">{{ article1.date.strftime("%d %B %Y") }} автор <a href="#"> Mark </a></p>
+                <p class="blog-post-meta">{{ article1.date.strftime("%d %B %Y") }} автор <a href="/profile/{{ user1.name }}">{{ article1.author }}</a></p>
                 <h6><em>"{{ article1.intro}}"</em></h6>
                 <hr>
                 <p class="blog-text">{{ article1.text }}</p>
@@ -81,11 +84,14 @@
                 <hr>
                 <h2 class="blog-post-title mb-1">{{ article2.title }}</h2>
                 <br>
-                <p class="blog-post-meta">{{ article2.date.strftime("%d %B %Y") }} автор <a href="#">Jacob</a></p>
+                <p class="blog-post-meta">{{ article2.date.strftime("%d %B %Y") }} автор <a href="/profile/{{ user2.name }}">{{ article2.author }}</a></p>
                 <h6><em>"{{ article2.intro}}"</em></h6>
                 <hr>
                 <p class="blog-text">{{ article2.text }}</p>
             </article>
+            {% else %}
+            <p>У нас ещё нет статей на сайте</p>
+            {% endif %}
         </div>
 
         <div class="col-md-4">

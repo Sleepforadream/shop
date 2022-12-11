@@ -33,7 +33,22 @@
                 <a href="/create-article" class="btn btn-warning">Создать статью</a>
                 <input type="search" class="form-control" placeholder="Поиск.." aria-label="Search">
             </form>
-
+            {% if current_user.is_authenticated %}
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <img src='/{{ current_user.imgpath }}' alt="mdo" width="32" height="32"
+                         class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small">
+                    <li><a class="dropdown-item" href="/create-article">Новая статья...</a></li>
+                    <li><a class="dropdown-item" href="/profile_settings">Настройки</a></li>
+                    <li><a class="dropdown-item" href="/private_profile">Профиль</a></li>
+                    <hr class="dropdown-divider">
+                    <li><a class="dropdown-item" href="{{ url_for('logout') }}">Выйти</a></li>
+                </ul>
+            </div>
+            {% else %}
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
                    aria-expanded="false">
@@ -41,10 +56,11 @@
                          class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small">
-                    <li><a class="dropdown-item" href="/login">Войти...</a></li>
-                    <li><a class="dropdown-item" href="/admin_panel">Админ панель</a></li>
+                    <li><a class="dropdown-item" href="/login">Войти</a></li>
+                    <li><a class="dropdown-item" href="/signup">Регистрация</a></li>
                 </ul>
             </div>
+            {% endif %}
         </div>
     </div>
 </header>
