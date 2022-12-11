@@ -5,7 +5,7 @@ import shutil
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -37,44 +37,69 @@ class Article(db.Model):
     heading = db.Column(db.String(100), nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     imgpath = db.Column(db.String(300), nullable=True)
+    author = db.Column(db.String(300),  nullable=False)
 
     def __repr__(self):
         return '<Article %r>' % self.id
 
 
 @login_manager.user_loader
-def load_user(userid):
-    return db.session.query(Authorization).get(userid)
+def load_user(user_id):
+    return db.session.query(Authorization).get(user_id)
 
 
 class Authorization(db.Model, UserMixin):
-    userid = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    name = db.Column(db.String(1000))
-
-    def get_id(self):
-        return Authorization.userid
+    name = db.Column(db.String(1000), unique=True, nullable=False)
+    info = db.Column(db.String(1000), nullable=True)
+    imgpath = db.Column(db.String(300), nullable=True)
 
     def __repr__(self):
-        return '<Authorization %r>' % self.id
+        return "<{}:{}>".format(self.id, self.name)
+
+    def get_id(self):
+        return Authorization.id
+
+    def get_name(self):
+        return Authorization.name
+
+    # def __repr__(self):
+    #     return '<Authorization %r>' % self.id
 
 
 @app.route('/')
 @app.route('/home')
 def index():
     articles = Article.query.order_by(Article.date.desc()).all()
-    article1 = Article.query.get(len(articles))
-    article2 = Article.query.get(len(articles) - 1)
-    uniquedates = set()
-    for article in articles:
-        date = article.date.strftime("%Y %B")
-        uniquedates.add(date)
-    monthsyears = sorted(uniquedates)
-    return render_template("index.html", articles=articles, article1=article1, article2=article2,
-                           monthsyears=monthsyears)
+    if len(articles) > 1:
+        articles_list = list()
+        for article in articles:
+            articles_list.append(article)
 
+        articles_list[len(articles_list)]
+        # article1 = Article.query.get(len(articles))
+        obj = Article.query.all()
+        article1 = str(obj[-1].id)
+        article2 = str(obj[-2].id)
+        # article1 = Authorization.query().filter(Authorization.id == len(articles)).first()
+        # article2 = Article.query.get(len(articles) - 1)
+        # article2 = Authorization.query().filter(Authorization.id == len(articles) - 1).first()
+        author1 = obj[-1].author
+        author2 = obj[-2].author
+        user1 = db.session.query(Authorization).filter(Authorization.name == author1).first()
+        user2 = db.session.query(Authorization).filter(Authorization.name == author2).first()
+        uniquedates = set()
+        for article in articles:
+            date = article.date.strftime("%Y %B")
+            uniquedates.add(date)
+        monthsyears = sorted(uniquedates)
+        return render_template("index.html", articles=articles, article1=article1, article2=article2,
+                               monthsyears=monthsyears, user1=user1, user2=user2)
+    else:
+        return render_template("index.html")
 
 @app.route('/about')
 def about():
@@ -83,6 +108,7 @@ def about():
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
+    users = Authorization.query.order_by(Authorization.date.desc()).all()
     error = ""
     if request.method == "POST":
 
@@ -110,6 +136,14 @@ def signup():
         if password != password_double:
             error = "Пароли не совпадают"
             return render_template("signup.html", error=error)
+
+        for user in users:
+            if user.email == email:
+                error = "Такая почта уже была зарегистрирована"
+                return render_template("signup.html", error=error)
+            if user.name == name:
+                error = "Пользователь с этим именем уже существует"
+                return render_template("signup.html", error=error)
 
         password = generate_password_hash(password)
 
@@ -140,18 +174,21 @@ def admin_panel():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    error = ""
+    if current_user.is_authenticated:
+        return redirect(url_for('admin_panel'))
 
-    class UserList(UserMixin):
+    class UserList(Authorization):
 
-        def __init__(self, userid, date, email, password, name):
-            self.userid = userid
+        def __init__(self, id, date, email, password, name):
+            self.id = id
             self.date = date
             self.email = email
             self.password = password
             self.name = name
 
         def get_id(self):
-            return self.userid
+            return self.id
 
     if request.method == "POST":
         email = request.form['floatingInput']
@@ -168,26 +205,90 @@ def login():
         for user in users:
             if user.email == email:
                 if check_password_hash(user.password, password):
-                    list_users = UserList(user.userid, user.date, user.email, user.password, user.name)
+                    list_users = UserList(user.id, user.date, user.email, user.password, user.name)
+                    # user = db.session.query(Authorization).filter(Authorization.email == email).first()
                     login_user(list_users, remember=remember)
-                    return redirect(url_for('admin_panel'))
+                    return redirect(url_for('private_profile'))
                 else:
-                    return "Пароль введён не верно"
-        return "Такой электронной почты не было зарегистрировано"
-    return render_template("login.html")
+                    error = "Пароль введён не верно"
+                    return render_template("login.html", error=error)
+        error = "Такой электронной почты не было зарегистрировано"
+        return render_template("login.html", error=error)
+    return render_template("login.html", error=error)
 
 
 @app.route('/logout/')
 @login_required
 def logout():
     logout_user()
-    flash("You have been logged out.")
     return redirect(url_for('login'))
 
 
-@app.route('/profile')
-def profile():
-    return render_template("signup.html")
+@app.route('/profile/<name>')
+def profile(name):
+    articles = Article.query.order_by(Article.date.desc()).all()
+    user = Authorization.query.filter(Authorization.name == name).first()
+    return render_template("profile.html", user=user, articles=articles)
+
+
+@app.route('/private_profile')
+def private_profile():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("private_profile.html", articles=articles)
+
+
+@app.route('/profile_settings', methods=['POST', 'GET'])
+def profile_settings():
+    error = ""
+    user = Authorization.query.get(current_user.id)
+    if request.method == "POST":
+        user.name = request.form['name']
+        user.email = request.form['email']
+        user.info = request.form['info']
+        password = request.form['password']
+        password2 = request.form['password2']
+
+        if len(user.name) >= 100 or len(user.email) >= 10000:
+            error = "Слишком большое колличство символов в строке"
+            return render_template("profile_settings.html", error=error)
+        if len(user.name) <= 0 or len(user.email) <= 0:
+            error = "Заполните поля: Имя и Email"
+            return render_template("profile_settings.html", error=error)
+        if password != "" or password2 != "":
+            if password != password2:
+                error = "Пароли должны совпадать"
+                return render_template("profile_settings.html", error=error)
+
+        if password != "":
+            pattern_password = re.compile(r'^(?=.*[0-9])(?=.*[!@#$%^&*_()=+?:;"`~/|,<>.-])(?=.*[a-z])(?=.*[A-Z])'
+                                          r'[0-9a-zA-Z!@#$%^&*_()=+?:;"`~/|,<>.-]{8,}$')
+            is_password = bool(pattern_password.match(password))
+            if not is_password:
+                error = "Слабый пароль. Пароль должен состоять по крайней мере из восьми символов, содержать символы в " \
+                        "верхнем и нижнем регистрах и включать по крайней мере одну цифру"
+                return render_template("profile_settings.html", error=error)
+
+            password = generate_password_hash(password)
+            user.password = password
+
+        try:
+            db.session.commit()
+        except:
+            return "При редактировании пользователя произошла ошибка"
+        else:
+            img = request.files['img']
+            if img.filename != "":
+                if not os.path.exists('static\\img\\users_photo\\' + str(user.id)):
+                    os.mkdir('static\\img\\users_photo\\' + str(user.id))
+                imgpath = 'static\\img\\users_photo\\' + str(user.id) + '\\' + img.filename
+                img.save(imgpath)
+                user.imgpath = imgpath
+                db.session.commit()
+                return redirect('/private_profile')
+
+            return redirect('/private_profile')
+    else:
+        return render_template("profile_settings.html", error=error)
 
 
 @app.route('/headings', methods=['POST', 'GET'])
@@ -291,13 +392,17 @@ def post_update(id):
             return "Слишком большое колличство символов в строке"
 
         img = request.files['img']
-        previmg = article.imgpath
-        # os.remove(article.imgpath)
-        if img.filename != "":
-            imgpath = 'static\\img\\articles\\' + str(article.id) + '\\' + img.filename
-            img.save(imgpath)
-            article.imgpath = imgpath
 
+        if img.filename != "":
+            if os.path.exists('static\\img\\articles\\' + str(article.id)):
+                imgpath = 'static\\img\\articles\\' + str(article.id) + '\\' + img.filename
+                img.save(imgpath)
+                article.imgpath = imgpath
+            else:
+                os.mkdir('static\\img\\articles\\' + str(article.id))
+                imgpath = 'static\\img\\articles\\' + str(article.id) + '\\' + img.filename
+                img.save(imgpath)
+                article.imgpath = imgpath
         try:
             db.session.commit()
             return redirect('/posts')
@@ -309,19 +414,21 @@ def post_update(id):
 
 
 @app.route('/create-article', methods=['POST', 'GET'])
+@login_required
 def create_article():
     if request.method == "POST":
         title = request.form['title']
         intro = request.form['intro']
         text = request.form['text']
         heading = request.form.get('heading')
+        author = current_user.name
 
         if title == "" or intro == "" or text == "":
             return "Были заполнены не все обязательные поля"
         if len(title) >= 60 or len(intro) >= 200 or len(text) >= 10000:
             return "Слишком большое колличство символов в строке"
 
-        article = Article(title=title, intro=intro, text=text, heading=heading)
+        article = Article(title=title, intro=intro, text=text, heading=heading, author=author)
 
         db.session.add(article)
         try:
@@ -338,8 +445,8 @@ def create_article():
                 article.imgpath = imgpath
                 db.session.commit()
 
-                return redirect('/')
-            return redirect('/')
+                return redirect('/posts')
+            return redirect('/posts')
     else:
         return render_template("create-article.html")
 
