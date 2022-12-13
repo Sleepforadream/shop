@@ -8,16 +8,16 @@
 <main class="container">
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between container">
-            <a class="p-2 link-secondary" href="#">Закон и порядок</a>
-            <a class="p-2 link-secondary" href="#">Спорт</a>
-            <a class="p-2 link-secondary" href="#">Финансы</a>
-            <a class="p-2 link-secondary" href="#">Природа</a>
-            <a class="p-2 link-secondary" href="#">Обучение</a>
-            <a class="p-2 link-secondary" href="#">Здоровье</a>
-            <a class="p-2 link-secondary" href="#">Наука и технологии</a>
-            <a class="p-2 link-secondary" href="#">Политика</a>
-            <a class="p-2 link-secondary" href="#">Военное дело</a>
-            <a class="p-2 link-secondary" href="#">Фотографии</a>
+            <a class="p-2 link-secondary" href="/headings_law">Закон и порядок</a>
+            <a class="p-2 link-secondary" href="/headings_sport">Спорт</a>
+            <a class="p-2 link-secondary" href="/headings_finance">Финансы</a>
+            <a class="p-2 link-secondary" href="/headings_nature">Природа</a>
+            <a class="p-2 link-secondary" href="/headings_learning">Обучение</a>
+            <a class="p-2 link-secondary" href="/headings_health">Здоровье</a>
+            <a class="p-2 link-secondary" href="/headings_science">Наука и технологии</a>
+            <a class="p-2 link-secondary" href="/headings_politic">Политика</a>
+            <a class="p-2 link-secondary" href="/headings_army">Военное дело</a>
+            <a class="p-2 link-secondary" href="/headings_photography">Фотографии</a>
         </nav>
     </div>
     <div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
@@ -74,7 +74,7 @@
             <article class="blog-post">
                 <h2 class="blog-post-title mb-1"><em>{{ article1.title }}</em></h2>
                 <br>
-                <p class="blog-post-meta">{{ article1.date.strftime("%d %B %Y") }} автор <a href="/profile/{{ user1.name }}">{{ article1.author }}</a></p>
+                <p class="blog-post-meta">{{ article1.date.strftime("%d %B %Y") }} автор <a href="/profile/{{ article1.author }}">{{ article1.author }}</a></p>
                 <h6><em>"{{ article1.intro}}"</em></h6>
                 <hr>
                 <p class="blog-text">{{ article1.text }}</p>
@@ -84,7 +84,7 @@
                 <hr>
                 <h2 class="blog-post-title mb-1">{{ article2.title }}</h2>
                 <br>
-                <p class="blog-post-meta">{{ article2.date.strftime("%d %B %Y") }} автор <a href="/profile/{{ user2.name }}">{{ article2.author }}</a></p>
+                <p class="blog-post-meta">{{ article2.date.strftime("%d %B %Y") }} автор <a href="/profile/{{ article2.author }}">{{ article2.author }}</a></p>
                 <h6><em>"{{ article2.intro}}"</em></h6>
                 <hr>
                 <p class="blog-text">{{ article2.text }}</p>

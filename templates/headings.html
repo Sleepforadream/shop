@@ -44,11 +44,70 @@
 
     {% for key, value in dictory|items %}
     {% if select == key or select == "Все категории" %}
+
+    {% if key == "Закон и порядок" %}
     <hr>
-    <h2>{{ key }}</h2>
+    <a href="/headings_law" style="color: black;"><h2>{{ key }}</h2></a>
     <hr>
+    {% endif %}
+
+    {% if key == "Военное дело" %}
+    <hr>
+    <a href="/headings_army" style="color: black;"><h2>{{ key }}</h2></a>
+    <hr>
+    {% endif %}
+
+    {% if key == "Финансы" %}
+    <hr>
+    <a href="/headings_finance" style="color: black;"><h2>{{ key }}</h2></a>
+    <hr>
+    {% endif %}
+
+    {% if key == "Здоровье" %}
+    <hr>
+    <a href="/headings_health" style="color: black;"><h2>{{ key }}</h2></a>
+    <hr>
+    {% endif %}
+
+    {% if key == "Обучение" %}
+    <hr>
+    <a href="/headings_learning" style="color: black;"><h2>{{ key }}</h2></a>
+    <hr>
+    {% endif %}
+
+    {% if key == "Наука и технологии" %}
+    <hr>
+    <a href="/headings_science" style="color: black;"><h2>{{ key }}</h2></a>
+    <hr>
+    {% endif %}
+
+    {% if key == "Политика" %}
+    <hr>
+    <a href="/headings_politic" style="color: black;"><h2>{{ key }}</h2></a>
+    <hr>
+    {% endif %}
+
+    {% if key == "Фотографии" %}
+    <hr>
+    <a href="/headings_photography" style="color: black;"><h2>{{ key }}</h2></a>
+    <hr>
+    {% endif %}
+
+    {% if key == "Спорт" %}
+    <hr>
+    <a href="/headings_sport" style="color: black;"><h2>{{ key }}</h2></a>
+    <hr>
+    {% endif %}
+
+    {% if key == "Природа" %}
+    <hr>
+    <a href="/headings_nature" style="color: black;"><h2>{{ key }}</h2></a>
+    <hr>
+    {% endif %}
+
     {% if value|length > 0 %}
     {% for element in value %}
+    {% if element.private == None or element.author == current_user.name %}
     {% if selectdate == element.date.strftime("%Y-%m-%d") or selectdate == "" %}
     <div class="heading-category">
         <div class="headings-card">
@@ -65,14 +124,22 @@
                         <a href="/posts/{{ element.id }}" class="btn btn-warning">Детальнее</a>
                     </div>
                 </div>
+                <div class="preview-img">
+                    <p class="intro-img">
+                        <img class="intro-img-implementation" src="{{ element.imgpath }}">
+                    </p>
+                </div>
             </div>
         </div>
     </div>
+    {% endif %}
     {% endif %}
     {% endfor %}
     {% else %}
     <p>У нас ещё нет статей данной рубрики на сайте</p>
     {% endif %}
+
+
     {% endif %}
     {% endfor %}
     <hr>

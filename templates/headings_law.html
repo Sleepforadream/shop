@@ -8,17 +8,16 @@
 <div class="container mt-5">
     <div class="p-4 p-md-5 mb-4 rounded text-bg-dark2">
         <div class="col-md-13 px-0">
-            <h1 class="title-text-image-posts fst-italic">Все статьи сайта</h1>
+            <h1 class="title-text-image-posts fst-italic">Раздел: Закон и порядок</h1>
             <br>
-            <p class="sub-text-image-posts">Полный перечень всех блогов размещённых на нашем сайте</p>
+            <p class="sub-text-image-posts">Перечень всех блогов из рубрики "Закон и порядок"</p>
         </div>
     </div>
     <br>
     <hr>
-    <h2>Все статьи на сайте</h2>
-    <hr>
     {% if articles|length > 0 %}
     {% for element in articles %}
+    {% if element.heading == "Закон и порядок" %}
     {% if element.private == None or element.author == current_user.name %}
     <div class="alert alert-info">
         <div class="announcement-info">
@@ -40,7 +39,7 @@
             </p>
         </div>
     </div>
-
+    {% endif %}
     {% endif %}
     {% endfor %}
     {% else %}

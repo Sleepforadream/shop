@@ -38,6 +38,7 @@ class Article(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
     imgpath = db.Column(db.String(300), nullable=True)
     author = db.Column(db.String(300),  nullable=False)
+    private = db.Column(db.String(100))
 
     def __repr__(self):
         return '<Article %r>' % self.id
@@ -78,28 +79,19 @@ def index():
         articles_list = list()
         for article in articles:
             articles_list.append(article)
+        article1 = articles_list[len(articles_list) - 1]
+        article2 = articles_list[len(articles_list) - 2]
 
-        articles_list[len(articles_list)]
-        # article1 = Article.query.get(len(articles))
-        obj = Article.query.all()
-        article1 = str(obj[-1].id)
-        article2 = str(obj[-2].id)
-        # article1 = Authorization.query().filter(Authorization.id == len(articles)).first()
-        # article2 = Article.query.get(len(articles) - 1)
-        # article2 = Authorization.query().filter(Authorization.id == len(articles) - 1).first()
-        author1 = obj[-1].author
-        author2 = obj[-2].author
-        user1 = db.session.query(Authorization).filter(Authorization.name == author1).first()
-        user2 = db.session.query(Authorization).filter(Authorization.name == author2).first()
         uniquedates = set()
         for article in articles:
             date = article.date.strftime("%Y %B")
             uniquedates.add(date)
         monthsyears = sorted(uniquedates)
         return render_template("index.html", articles=articles, article1=article1, article2=article2,
-                               monthsyears=monthsyears, user1=user1, user2=user2)
+                               monthsyears=monthsyears)
     else:
         return render_template("index.html")
+
 
 @app.route('/about')
 def about():
@@ -237,8 +229,9 @@ def private_profile():
     return render_template("private_profile.html", articles=articles)
 
 
-@app.route('/profile_settings', methods=['POST', 'GET'])
-def profile_settings():
+@app.route('/profile_settings/<name>', methods=['POST', 'GET'])
+def profile_settings(name):
+    Authorization.query.filter(Authorization.name == name).first()
     error = ""
     user = Authorization.query.get(current_user.id)
     if request.method == "POST":
@@ -289,6 +282,30 @@ def profile_settings():
             return redirect('/private_profile')
     else:
         return render_template("profile_settings.html", error=error)
+
+
+@app.route('/profile_settings/<name>/delete')
+def user_delete(name):
+    articles = Article.query.order_by(Article.date.desc()).all()
+    user = Authorization.query.filter(Authorization.name == name).first()
+
+    separatepath = str(user.imgpath).split("\\")
+    separatepath.pop(len(separatepath) - 1)
+    pathtopackgage = ""
+    for path in separatepath:
+        if separatepath.index(path) != len(separatepath) - 1:
+            pathtopackgage = pathtopackgage + path + "//"
+        else:
+            pathtopackgage = pathtopackgage + path
+    if user.imgpath is None:
+        db.session.delete(user)
+        db.session.commit()
+    else:
+        shutil.rmtree(pathtopackgage)
+        db.session.delete(user)
+        db.session.commit()
+    logout_user()
+    return redirect('/')
 
 
 @app.route('/headings', methods=['POST', 'GET'])
@@ -343,6 +360,66 @@ def headings():
     return render_template("headings.html", articles=articles, Law=Law, Sport=Sport, Finance=Finance,
                            Nature=Nature, Learning=Learning, Health=Health, Science=Science, Politic=Politic,
                            Army=Army, Photo=Photo, select=select, selectdate=selectdate, dictory=dictory)
+
+
+@app.route('/headings_sport')
+def headings_sport():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("headings_sport.html", articles=articles)
+
+
+@app.route('/headings_law')
+def headings_law():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("headings_law.html", articles=articles)
+
+
+@app.route('/headings_finance')
+def headings_finance():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("headings_finance.html", articles=articles)
+
+
+@app.route('/headings_nature')
+def headings_nature():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("headings_nature.html", articles=articles)
+
+
+@app.route('/headings_learning')
+def headings_learning():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("headings_learning.html", articles=articles)
+
+
+@app.route('/headings_health')
+def headings_health():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("headings_health.html", articles=articles)
+
+
+@app.route('/headings_science')
+def headings_science():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("headings_science.html", articles=articles)
+
+
+@app.route('/headings_politic')
+def headings_politic():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("headings_politic.html", articles=articles)
+
+
+@app.route('/headings_army')
+def headings_army():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("headings_army.html", articles=articles)
+
+
+@app.route('/headings_photography')
+def headings_photography():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("headings_photography.html", articles=articles)
 
 
 @app.route('/posts')
@@ -422,13 +499,14 @@ def create_article():
         text = request.form['text']
         heading = request.form.get('heading')
         author = current_user.name
+        private = request.form['checkbox']
 
         if title == "" or intro == "" or text == "":
             return "Были заполнены не все обязательные поля"
         if len(title) >= 60 or len(intro) >= 200 or len(text) >= 10000:
             return "Слишком большое колличство символов в строке"
 
-        article = Article(title=title, intro=intro, text=text, heading=heading, author=author)
+        article = Article(title=title, intro=intro, text=text, heading=heading, author=author, private=private)
 
         db.session.add(article)
         try:

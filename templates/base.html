@@ -42,7 +42,7 @@
                 </a>
                 <ul class="dropdown-menu text-small">
                     <li><a class="dropdown-item" href="/create-article">Новая статья...</a></li>
-                    <li><a class="dropdown-item" href="/profile_settings">Настройки</a></li>
+                    <li><a class="dropdown-item" href="/profile_settings/{{ current_user.name }}">Настройки</a></li>
                     <li><a class="dropdown-item" href="/private_profile">Профиль</a></li>
                     <hr class="dropdown-divider">
                     <li><a class="dropdown-item" href="{{ url_for('logout') }}">Выйти</a></li>
@@ -52,7 +52,7 @@
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
                    aria-expanded="false">
-                    <img src="static\img\NEWS BLOG_free-file.png" alt="mdo" width="32" height="32"
+                    <img src="static\img\qwert.jpg" alt="mdo" width="32" height="32"
                          class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small">

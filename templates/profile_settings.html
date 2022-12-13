@@ -24,16 +24,18 @@
             <div class="select-headings">
                 <div class="image-upload-heading">
                     <div class="image-selector">
-                        <img class="user-img-profile" src='/{{ current_user.imgpath }}' alt="mdo" width="64" height="64">
+                        <img class="user-img-profile" src='/{{ current_user.imgpath }}' alt="mdo" width="64"
+                             height="64">
                         <label class="label-upload-image" for="img">Изменить фотографию профиля:</label>
-                        <input class="button-upload-image" type="file" name="img" id="img" accept="image/jpeg,image/png">
+                        <input class="button-upload-image" type="file" name="img" id="img"
+                               accept="image/jpeg,image/png">
                     </div>
                 </div>
             </div>
             <hr>
             <b>Имя:</b><input type="text" name="name" id="name" class="form-control2"
-                                value="{{ current_user.name }}"
-                                placeholder="Введите свое имя">
+                              value="{{ current_user.name }}"
+                              placeholder="Введите свое имя">
             <hr>
             <b>Email:</b><input type="email" name="email" id="email" class="form-control2"
                                 value="{{ current_user.email }}"
@@ -42,9 +44,9 @@
             <p><b>Изменить пароль:</b></p>
             <p>Новый пароль:</p>
             <input type="password" name="password" id="password" class="form-control2"
-                                 placeholder="Введите новый пароль" value="">
+                   placeholder="Введите новый пароль" value="">
             <input type="password" name="password2" id="password2" class="form-control2"
-                                 placeholder="Повторите новый пароль" value="">
+                   placeholder="Повторите новый пароль" value="">
             <hr>
             <b>Информация о пользователе:</b>
             <br>
@@ -65,9 +67,15 @@
             <p><b>Дата регистрации:</b> {{ current_user.date.date() }}</p>
             <hr>
             <br>
-            <div class="upload-image">
-                <input type="submit" class="btn btn-submit" value="Сохранить изменения">
-                <a href="/" class="btn btn-danger reset-button" type="button">Отмена</a>
+            <div class ="profile-submit-box">
+                <div class="upload-image">
+                    <input type="submit" class="btn btn-submit" value="Сохранить изменения">
+                    <a href="/" class="btn btn-danger reset-button" type="button">Отмена</a>
+                </div>
+                <div>
+                    <a href="/profile_settings/{{ current_user.name }}/delete" class="btn btn-danger">Удалить этот
+                        аккаунт</a>
+                </div>
             </div>
         </form>
     </div>
