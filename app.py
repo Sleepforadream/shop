@@ -20,11 +20,7 @@ app.config['MAIL_USERNAME'] = 'youmail@gmail.com'
 app.config['MAIL_DEFAULT_SENDER'] = 'youmail@gmail.com'
 app.config['MAIL_PASSWORD'] = 'password'
 
-# manager = Manager(app)
-# manager.add_command('db', MigrateCommand)
 db = SQLAlchemy(app)
-# migrate = Migrate(app, db)
-# mail = Mail(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
@@ -66,9 +62,6 @@ class Authorization(db.Model, UserMixin):
 
     def get_name(self):
         return Authorization.name
-
-    # def __repr__(self):
-    #     return '<Authorization %r>' % self.id
 
 
 @app.route('/')
@@ -160,6 +153,11 @@ def signup():
 @app.route('/login_success')
 def login_success():
     return render_template("login_success.html")
+
+
+@app.route('/123')
+def log123():
+    return render_template("123.html")
 
 
 @app.route('/admin_panel')
