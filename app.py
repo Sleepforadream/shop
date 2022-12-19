@@ -98,6 +98,11 @@ def about():
     return render_template("about.html")
 
 
+@app.route('/shop2')
+def shop2():
+    return render_template("shop2.html")
+
+
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
     users = Authorization.query.order_by(Authorization.date.desc()).all()
