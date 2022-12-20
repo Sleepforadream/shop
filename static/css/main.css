@@ -87,7 +87,9 @@ body{
 }
 
 .facebook-icon{
-    fill: #575c61;
+    content: url(../img/icons/icons8-вконтакте.svg);
+    width: 16px;
+    height: 16px;
     margin-right: 15px;
 }
 
@@ -329,7 +331,13 @@ body{
 margin-top: 8px;
 }
 
-.tooltip {
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity .3s linear;
+    transition: opacity .3s linear;
+}
+
+.tooltip-inner {
     top: 34px;
     left: 127.5px;
     display: block;
@@ -345,44 +353,6 @@ margin-top: 8px;
     font-weight: 400;
     letter-spacing: 0px;
     font-style: normal;
-    }
-
-.fade {
-    opacity: 0;
-    -webkit-transition: opacity .3s linear;
-    transition: opacity .3s linear;
-}
-
-.tooltip-inner {
-      position: fixed;
-      max-width: 200px;
-    padding: 3px 8px;
-    color: #d1d1d2;
-    text-align: center;
-    text-decoration: none;
-    background-color: rgba(33,33,33,.97);
-    border-radius: 4px;
-    background-clip: padding-box;
-    visibility: visible;
-    font-size: 12px;
-    line-height: 1.4;
-    }
-
-.tooltip-arrow {
-      position: fixed;
-      max-width: 200px;
-    padding: 3px 8px;
-    color: #d1d1d2;
-    text-align: center;
-    text-decoration: none;
-    background-color: rgba(33,33,33,.97);
-    border-radius: 4px;
-    background-clip: padding-box;
-    visibility: visible;
-    font-size: 12px;
-    line-height: 1.4;
-    }
-
     max-width: 200px;
     padding: 3px 8px;
     color: #d1d1d2;
@@ -391,6 +361,25 @@ margin-top: 8px;
     background-color: rgba(33,33,33,.97);
     border-radius: 4px;
     background-clip: padding-box;
+    }
+
+.tooltip-arrow {
+    opacity: .9;
+    visibility: visible;
+    font-size: 12px;
+    line-height: 1.4;
+    box-sizing: border-box;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    top: 0;
+    margin-left: -5px;
+    border-width: 0 5px 5px;
+    border-bottom-color: rgba(33,33,33,.97);
+    left: 50%;
+    }
 
 
 

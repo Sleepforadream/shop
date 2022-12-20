@@ -1,39 +1,60 @@
-    let tooltipElem;
+    let tooltipElem2;
+    let tooltipElem3;
+
 
     document.onmouseover = function(event) {
       let target = event.target;
 
       // если у нас есть подсказка...
-      let tooltipHtml = target.dataset.tooltip;
-      if (!tooltipHtml) return;
+
+      let tooltipHtml2 = target.dataset.tooltip;
+      let tooltipHtml3 = target.dataset.tooltip;
+
+      if (!tooltipHtml2) return;
+      if (!tooltipHtml3) return;
 
       // ...создадим элемент для подсказки
 
-      tooltipElem = document.createElement('div');
-      tooltipElem.className = 'tooltip';
-      tooltipElem.innerHTML = tooltipHtml;
-      document.body.append(tooltipElem);
+
+      tooltipElem2 = document.createElement('div');
+      tooltipElem3 = document.createElement('div');
+
+      tooltipElem2.className = 'tooltip-inner';
+      tooltipElem3.className = 'tooltip-arrow';
+
+      tooltipElem2.innerHTML = tooltipHtml2;
+
+      document.body.append(tooltipElem2);
+      document.body.append(tooltipElem3);
 
       // спозиционируем его сверху от аннотируемого элемента (top-center)
       let coords = target.getBoundingClientRect();
 
-      let left = coords.left + (target.offsetWidth - tooltipElem.offsetWidth) / 2;
-      if (left < 0) left = 0; // не заезжать за левый край окна
+      let left = coords.left + (target.offsetWidth - tooltipElem2.offsetWidth) / 2;
+      let left2 = coords.left + (target.offsetWidth) / 2
 
-      let top = coords.top - tooltipElem.offsetHeight - 5;
-      if (top < 0) { // если подсказка не помещается сверху, то отображать её снизу
-        top = coords.top + target.offsetHeight + 5;
-      }
+      let top = coords.top + 5 + target.offsetHeight;
 
-      tooltipElem.style.left = left + 'px';
-      tooltipElem.style.top = top + 'px';
+
+      tooltipElem2.style.left = left + 'px';
+      tooltipElem2.style.top = top + 2 + 'px';
+
+      tooltipElem3.style.left = left2 + 'px';
+      tooltipElem3.style.top = top + 'px';
+
     };
 
     document.onmouseout = function(e) {
 
-      if (tooltipElem) {
-        tooltipElem.remove();
-        tooltipElem = null;
+
+      if (tooltipElem2) {
+        tooltipElem2.remove();
+        tooltipElem2 = null;
+      }
+
+      if (tooltipElem3) {
+        tooltipElem3.remove();
+        tooltipElem3 = null;
       }
 
     };
