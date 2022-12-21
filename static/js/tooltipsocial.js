@@ -33,7 +33,7 @@
       let left = coords.left + (target.offsetWidth - tooltipElem2.offsetWidth) / 2;
       let left2 = coords.left + (target.offsetWidth) / 2
 
-      let top = coords.top + 5 + target.offsetHeight;
+      let top = coords.top + 2 + target.offsetHeight;
 
 
       tooltipElem2.style.left = left + 'px';

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <a href="#" class="open-popup">Открыть попап</a>
+    </div>
+
+    <div class="popup__bg">
+        <form class="popup">
+            <img src="images/close.svg" class="close-popup">
+            <label>
+                <input type="text" name="name">
+                <div class="label__text">
+                    Ваше имя
+                </div>
+            </label>
+            <label>
+                <input type="tel" name="tel">
+                <div class="label__text">
+                    Ваш телефон
+                </div>
+            </label>
+            <label>
+                <textarea name="message"></textarea>
+                <div class="label__text">
+                    Ваше сообщение
+                </div>
+            </label>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/userPanel.js') }}"></script>
+</body>
+
+</html>

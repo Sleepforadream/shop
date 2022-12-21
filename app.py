@@ -95,6 +95,9 @@ def about():
 def shop2():
     return render_template("shop2.html")
 
+@app.route('/userLoginWindow')
+def user_login_window():
+    return render_template("userLoginWindow.html")
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
