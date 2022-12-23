@@ -19,7 +19,11 @@
       tooltipElem2 = document.createElement('div');
       tooltipElem3 = document.createElement('div');
 
-      tooltipElem2.className = 'tooltip-inner';
+      tooltipElem2.classList.add('tooltip-inner');
+      if (tooltipElem2.classList.contains('tooltip-inner')){
+        tooltipElem2.classList.add('active');
+      }
+
       tooltipElem3.className = 'tooltip-arrow';
 
       tooltipElem2.innerHTML = tooltipHtml2;
