@@ -13,14 +13,14 @@
 
     let coords = openPopupButton.getBoundingClientRect();
     let left2 = coords.left + (openPopupButton.offsetWidth - popup.offsetWidth) / 2;
-    let top2 = coords.top + openPopupButton.offsetHeight + 7.5;
+    let top2 = coords.top + openPopupButton.offsetHeight;
     popup.style.left = left2 + 'px';
     popup.style.top = top2 + 'px';
 
     window.onresize = function() {
         let coords = openPopupButton.getBoundingClientRect();
         let left2 = coords.left + (openPopupButton.offsetWidth - popup.offsetWidth) / 2;
-        let top2 = coords.top + openPopupButton.offsetHeight + 7.5;
+        let top2 = coords.top + openPopupButton.offsetHeight;
         popup.style.left = left2 + 'px';
         popup.style.top = top2 + 'px';
     }

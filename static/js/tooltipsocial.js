@@ -20,9 +20,6 @@
       tooltipElem3 = document.createElement('div');
 
       tooltipElem2.classList.add('tooltip-inner');
-      if (tooltipElem2.classList.contains('tooltip-inner')){
-        tooltipElem2.classList.add('active');
-      }
 
       tooltipElem3.className = 'tooltip-arrow';
 
@@ -45,6 +42,12 @@
 
       tooltipElem3.style.left = left2 + 'px';
       tooltipElem3.style.top = top + 'px';
+
+      tooltipElem2.style.transition = "0.5s";
+      tooltipElem2.style.opacity = 0.9;
+
+      tooltipElem3.style.transition = "0.5s";
+      tooltipElem3.style.opacity = 0.9;
 
     };
 

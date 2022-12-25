@@ -306,8 +306,17 @@ body{
     }
 
 .header-menu {
-    padding-top: 0.5rem!important;
-    padding-bottom: 1rem!important;
+    height: 77px;
+}
+
+.img_logo1 {
+    width: auto;
+    height: auto;
+}
+
+.menu-logo
+img {
+    width: 125px;
 }
 
 .second-header-menu{
@@ -374,6 +383,7 @@ body{
     width: 16px;
     height: 16px;
     margin-right: 15px;
+    margin-left: 5px;
 }
 
 .vk-icon:hover{
@@ -385,6 +395,7 @@ body{
     width: 16px;
     height: 16px;
     margin-right: 15px;
+    margin-left: 4px;
 }
 
 .facebook-icon:hover{
@@ -397,6 +408,7 @@ body{
     height: 14.5px;
     margin-right: 15px;
     margin-bottom: 1px;
+    margin-left: 2px;
 }
 
 .instagram-icon:hover{
@@ -408,6 +420,7 @@ body{
     width: 16px;
     height: 16px;
     margin-right: 15px;
+    margin-left: 2px;
 }
 
 .whatsapp-icon:hover{
@@ -419,6 +432,7 @@ body{
     width: 16px;
     height: 16px;
     margin-right: 15px;
+    margin-left: 2px;
 }
 
 .twitter-icon:hover{
@@ -426,6 +440,7 @@ body{
 }
 
 .menu-text{
+
     color: #808080;
     font-size: 13px;
     font-family: Karla,Arial,Helvetica,sans-serif;
@@ -610,6 +625,7 @@ body{
     align-items: center;
     padding-right: 8px;
     text-decoration: none;
+    height: 50px;
 }
 
 .text-href{
@@ -636,7 +652,9 @@ body{
 }
 
 .social-container{
-    margin-top: 8px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .fade {
@@ -649,7 +667,6 @@ body{
     display: block;
     margin-top: 3px;
     padding: 5px 0;
-
     z-index: 10030;
     position: absolute;
     visibility: visible;
@@ -672,28 +689,19 @@ body{
     opacity: 0;
     }
 
-.tooltip-inner.active {
-    opacity: .9;
-    transition: 5s;
-    pointer-events: all;
-}
-
 .tooltip-arrow {
-    opacity: .9;
+    transition: none;
+    opacity: 0;
     visibility: visible;
     font-size: 12px;
     line-height: 1.4;
     box-sizing: border-box;
     position: absolute;
-    width: 0;
-    height: 0;
     border-color: transparent;
     border-style: solid;
-    top: 0;
     margin-left: -5px;
     border-width: 0 5px 5px;
     border-bottom-color: rgba(33,33,33,.97);
-    left: 50%;
     }
 
 
