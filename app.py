@@ -80,7 +80,7 @@ def index():
             date = article.date.strftime("%Y %B")
             uniquedates.add(date)
         monthsyears = sorted(uniquedates)
-        return render_template("index.html", articles=articles, article1=article1, article2=article2,
+        return render_template("index.html", current_page='/', articles=articles, article1=article1, article2=article2,
                                monthsyears=monthsyears)
     else:
         return render_template("index.html")
@@ -160,7 +160,7 @@ def login_success():
 
 @app.route('/123')
 def log123():
-    return render_template("123.html")
+    return render_template("macros.html")
 
 
 @app.route('/admin_panel')

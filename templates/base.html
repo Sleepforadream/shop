@@ -14,17 +14,18 @@
 <body>
 
 <header class="second-header-menu">
-    <!--    <script type="text/javascript" src="{{ url_for('static', filename='js/alert.js') }}"></script>-->
     <script type="text/javascript" src="{{ url_for('static', filename='js/tooltipsocial.js') }}"></script>
 
     <div class="second-container-header">
         <div class="second-menu-wrapper">
-            <div class="social-container">
-                <a data-tooltip="Vk" href="#" class="vk-icon"></a>
-                <a data-tooltip="Facebook" href="#" class="facebook-icon"></a>
-                <a data-tooltip="Instagram" href="#" class="instagram-icon"></a>
-                <a data-tooltip="Whatsapp" href="#" class="whatsapp-icon"></a>
-                <a data-tooltip="Twitter" href="#" class="twitter-icon"></a>
+            <div class="left-second-header">
+                <div class="social-container">
+                    <a data-tooltip="Vk" href="#" class="vk-icon"></a>
+                    <a data-tooltip="Facebook" href="#" class="facebook-icon"></a>
+                    <a data-tooltip="Instagram" href="#" class="instagram-icon"></a>
+                    <a data-tooltip="Whatsapp" href="#" class="whatsapp-icon"></a>
+                    <a data-tooltip="Twitter" href="#" class="twitter-icon"></a>
+                </div>
             </div>
             <div class="user-box">
                 <div class="popup__bg" id="div1" data-some-data-attr="mydata">
@@ -43,7 +44,7 @@
                             <input type="hidden" name="redirect" value=""></p>
                         <a class="menu-login-box-register" href="#" title="Запись">Запись</a>
                     </form>
-                </div>
+            </div>
 
                 {% if current_user.is_authenticated %}
                 <a href="#">
@@ -77,15 +78,17 @@
             </a>
 
             <ul class="menu-categories">
-                <li><a href="/" class="nav-link-secondary">Обзор</a></li>
-                <li><a href="/posts" class="nav-link-dark">Блоги</a></li>
-                <li><a href="/headings" class="nav-link-dark">Рубрики</a></li>
-                <li><a href="/about" class="nav-link-dark">О нас</a></li>
+                <li style="padding-right:40px!important;"><a href="/" class="text-menu">Главная</a></li>
+                <li style="padding-right:40px!important;"><a href="/posts" class="text-menu">Категории</a></li>
+                <li style="padding-right:40px!important;"><a href="/headings" class="text-menu">Блог</a></li>
+                <li style="padding-right:40px!important;"><a href="/about" class="text-menu">О нас</a></li>
+                <li style="padding-right:40px!important;"><a href="/about" class="text-menu">Контакты</a></li>
             </ul>
 
+
             <form class="menu-right" role="search">
-                <a href="/create-article" class="btn-thin-small">Создать статью</a>
-                <input type="search" class="form-control" placeholder="Поиск.." aria-label="Search">
+                <a href="/create-article" class="button-enter-user medium menu">Запись на замер</a>
+                <a href="#" class="search-icon"></a>
             </form>
             {% if current_user.is_authenticated %}
             <div class="menu-user-panel">
@@ -100,18 +103,6 @@
                     <li><a class="dropdown-item" href="/private_profile">Профиль</a></li>
                     <hr class="dropdown-divider">
                     <li><a class="dropdown-item" href="{{ url_for('logout') }}">Выйти</a></li>
-                </ul>
-            </div>
-            {% else %}
-            <div class="dropdown text-end">
-                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-                   aria-expanded="false">
-                    <img src="static\img\qwert.jpg" alt="mdo" width="32" height="32"
-                         class="rounded-circle">
-                </a>
-                <ul class="dropdown-menu text-small">
-                    <li><a class="dropdown-item" href="/login">Войти</a></li>
-                    <li><a class="dropdown-item" href="/signup">Регистрация</a></li>
                 </ul>
             </div>
             {% endif %}
