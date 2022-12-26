@@ -566,6 +566,14 @@ height: 43px;
     transition: 0.5s all;
 }
 
+.text-menu.hover{
+    border-top-style: solid;
+    border-top-color: #d32e2e;
+    border-top-width: 2px;
+    color: #d32e2e!important;
+    transition: 0.5s all;
+}
+
 @media (min-width: 992px){.menu-right{
     margin-bottom: 8px;
 }
