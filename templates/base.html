@@ -7,15 +7,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <script type="text/javascript" src="{{ url_for('static', filename='js/userPanel.js') }}"></script>
 
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 
 <header class="second-header-menu">
-    <script type="text/javascript" src="{{ url_for('static', filename='js/tooltipsocial.js') }}"></script>
-
+    <script type="text/javascript" src="{{ url_for('static', filename='js/Site-KD.js') }}"></script>
+    <div class="menu-search" id="div2" data-some-data-attr="mydata">
+        <form class="search-form" method="get" action="http://doors-kd.ru/">
+            <div class="search-form-content">
+                <div class="search-field">
+                    <p class="text-search"><input type="text" class="input-search" name="log" id="search"
+                                                  value=""
+                                                  placeholder="Поиск ...">
+                        <input type="hidden" name="login_box" value="true"></p>
+                </div>
+                <div class="search-button">
+                    <p class="button-box-enter-user">
+                        <input type="submit" name="submit" id="submit2" class="button-search"
+                               value=" ">
+                        <input type="hidden" name="redirect" value=""></p>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="second-container-header">
         <div class="second-menu-wrapper">
             <div class="left-second-header">
@@ -105,29 +121,71 @@
                 {% endif %}
             </ul>
 
-
             <form class="menu-right" role="search">
                 <a href="/create-article" class="button-enter-user medium menu">Запись на замер</a>
-                <a href="#" class="search-icon"></a>
+                <div class="search-icon-box">
+                    <svg class="search-icon" width="800px" height="800px" viewBox="0 0 52 52"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M49.62,45.27,36.22,32a18.9,18.9,0,1,0-34.1-9.2A18.91,18.91,0,0,0,32,36.27l13.3,13.3a1.45,1.45,0,0,0,2.1,0l2.1-2.1A1.68,1.68,0,0,0,49.62,45.27Zm-28.7-11.5a12.9,12.9,0,1,1,12.9-12.9A12.87,12.87,0,0,1,20.92,33.77Z"/>
+                    </svg>
+                </div>
             </form>
-            {% if current_user.is_authenticated %}
-            <div class="menu-user-panel">
-                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-                   aria-expanded="false">
-                    <img src='/{{ current_user.imgpath }}' alt="mdo" width="32" height="32"
-                         class="rounded-circle">
-                </a>
-                <ul class="dropdown-menu text-small">
-                    <li><a class="dropdown-item" href="/create-article">Новая статья...</a></li>
-                    <li><a class="dropdown-item" href="/profile_settings/{{ current_user.name }}">Настройки</a></li>
-                    <li><a class="dropdown-item" href="/private_profile">Профиль</a></li>
-                    <hr class="dropdown-divider">
-                    <li><a class="dropdown-item" href="{{ url_for('logout') }}">Выйти</a></li>
-                </ul>
-            </div>
-            {% endif %}
+
+            <div class="hamburger-menu"></div>
         </div>
     </div>
+</header>
+<header class="mobile-menu-box">
+    <nav class="mobile-menu" aria-label="Главное мобильное меню" style="display: block;">
+        <ul class="mobile-menu-list">
+            <li class="mobile-menu-item">
+                <a href="http://doors-kd.ru/" class="mobile-menu-highlight">
+                    <span class="menu-text">Главная</span>
+                </a>
+            </li>
+            <li class="mobile-menu-item">
+                <a href="http://doors-kd.ru/blog/" class="mobile-menu-highlight">
+                    <span class="menu-text">Блог</span>
+                </a>
+            </li>
+            <li class="mobile-menu-item-categories">
+                <div class="mobile-menu-categories">
+                    <a class="mobile-menu-highlight"><span class="menu-text">Категории</span>
+                    </a>
+                    <a aria-label="Открыть подменю Категории" aria-expanded="false" class="indicator-dropdown-medium">
+                    </a>
+                </div>
+            </li>
+            <ul role="menu" class="mobile-sub-menu">
+                <li class="mobile-submenu-item">
+                    <a class="mobile-menu-highlight" href="http://doors-kd.ru/md/">- Межкомнатные двери</a>
+                </li>
+                <li class="mobile-submenu-item">
+                    <a class="mobile-menu-highlight" href="http://doors-kd.ru/vd/">- Входные двери</a>
+                </li>
+                <li class="mobile-submenu-item">
+                    <a class="mobile-menu-highlight" href="http://doors-kd.ru/furn/">- Фурнитура</a>
+                </li>
+                <li class="mobile-submenu-item">
+                    <a class="mobile-menu-highlight" href="http://doors-kd.ru/pg/">- Погонажные изделия</a>
+                </li>
+            </ul>
+            <li class="mobile-menu-item">
+                <a href="http://doors-kd.ru/we/" class="mobile-menu-highlight">
+                    <span class="menu-text">О нас</span>
+                </a>
+            </li>
+            <li class="mobile-menu-item">
+                <a href="http://doors-kd.ru/cocntacts/" class="mobile-menu-highlight">
+                    <span class="menu-text">Контакты</span>
+                </a>
+            </li>
+            <li class="mobile-menu-item">
+                <a href="http://doors-kd.ru/zamer/" class="mobile-menu-highlight"><span
+                        class="menu-text">Запись на замер</span></a>
+            </li>
+        </ul>
+    </nav>
 </header>
 {% block body %}{% endblock %}
 <footer class="blog-footer">
