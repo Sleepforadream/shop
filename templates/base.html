@@ -102,7 +102,14 @@
                 {% if request.endpoint == "posts" %}
                 <li style="padding-right:40px!important;"><a href="/posts" class="text-menu hover">Категории</a></li>
                 {% else %}
-                <li style="padding-right:40px!important;"><a href="/posts" class="text-menu">Категории</a></li>
+                <li style="padding-right:40px!important;">
+                    <a class="menu-category-item">
+                        <span class="text-menu-categories">Категории</span>
+                        <span aria-label="Открыть подменю Категории" aria-expanded="false"
+                           class="indicator-dropdown-small">
+                        </span>
+                    </a>
+                </li>
                 {% endif %}
                 {% if request.endpoint == "headings" %}
                 <li style="padding-right:40px!important;"><a href="/headings" class="text-menu hover">Блог</a></li>
