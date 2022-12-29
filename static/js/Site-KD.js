@@ -2,117 +2,117 @@ window.onload = function () {
 
 //начало tooltipSocial
 
-let tooltipInner;
-let arrow;
+    let tooltipInner;
+    let arrow;
 
-document.onmouseover = function (event) {
-    let target = event.target;
+    document.onmouseover = function (event) {
+        let target = event.target;
 
-    // если у нас есть подсказка...
+        // если у нас есть подсказка...
 
-    let tooltipInnerHtml = target.dataset.tooltip;
-    let arrowHtml = target.dataset.tooltip;
+        let tooltipInnerHtml = target.dataset.tooltip;
+        let arrowHtml = target.dataset.tooltip;
 
-    if (!tooltipInnerHtml) return;
-    if (!arrowHtml) return;
+        if (!tooltipInnerHtml) return;
+        if (!arrowHtml) return;
 
-    // ...создадим элемент для подсказки
-
-
-    tooltipInner = document.createElement('div');
-    arrow = document.createElement('div');
-
-    tooltipInner.classList.add('tooltip-inner');
-
-    arrow.className = 'tooltip-arrow';
-
-    tooltipInner.innerHTML = tooltipInnerHtml;
-
-    document.body.append(tooltipInner);
-    document.body.append(arrow);
-
-    // спозиционируем его сверху от аннотируемого элемента (top-center)
-    let coords = target.getBoundingClientRect();
-
-    let leftTooltip = coords.left + (target.offsetWidth - tooltipInner.offsetWidth) / 2;
-    let leftTooltip2 = coords.left + (target.offsetWidth) / 2
-
-    let topTooltip = coords.top + 2 + target.offsetHeight;
+        // ...создадим элемент для подсказки
 
 
-    tooltipInner.style.left = leftTooltip + 'px';
-    tooltipInner.style.top = topTooltip + 2 + 'px';
+        tooltipInner = document.createElement('div');
+        arrow = document.createElement('div');
 
-    arrow.style.left = leftTooltip2 + 'px';
-    arrow.style.top = topTooltip + 'px';
+        tooltipInner.classList.add('tooltip-inner');
 
-    tooltipInner.style.transition = "0.5s";
-    tooltipInner.style.opacity = 0.9;
+        arrow.className = 'tooltip-arrow';
 
-    arrow.style.transition = "0.5s";
-    arrow.style.opacity = 0.9;
+        tooltipInner.innerHTML = tooltipInnerHtml;
 
-};
+        document.body.append(tooltipInner);
+        document.body.append(arrow);
 
-document.onmouseout = function () {
+        // спозиционируем его сверху от аннотируемого элемента (top-center)
+        let coords = target.getBoundingClientRect();
+
+        let leftTooltip = coords.left + (target.offsetWidth - tooltipInner.offsetWidth) / 2;
+        let leftTooltip2 = coords.left + (target.offsetWidth) / 2
+
+        let topTooltip = coords.top + 2 + target.offsetHeight;
 
 
-    if (tooltipInner) {
-        tooltipInner.remove();
-        tooltipInner = null;
-    }
+        tooltipInner.style.left = leftTooltip + 'px';
+        tooltipInner.style.top = topTooltip + 2 + 'px';
 
-    if (arrow) {
-        arrow.remove();
-        arrow = null;
-    }
+        arrow.style.left = leftTooltip2 + 'px';
+        arrow.style.top = topTooltip + 'px';
 
-};
+        tooltipInner.style.transition = "0.5s";
+        tooltipInner.style.opacity = 0.9;
+
+        arrow.style.transition = "0.5s";
+        arrow.style.opacity = 0.9;
+
+    };
+
+    document.onmouseout = function () {
+
+
+        if (tooltipInner) {
+            tooltipInner.remove();
+            tooltipInner = null;
+        }
+
+        if (arrow) {
+            arrow.remove();
+            arrow = null;
+        }
+
+    };
 
 //конец tooltipSocial
 
 //начало userBlock
 
-let popup = document.querySelector('.user-popup'); // Само окно
-let openPopupButton = document.querySelector('.menu-user-panel'); // Кнопка для показа окна
-let userBlock = document.querySelector('.user-box'); // Весь юзерблок (само окно + кнопка для показа)
-let userCheckbox = document.querySelector('.remember-checkbox'); // Чекбокс
-let userLogin = document.querySelector('.input-login-user-popup'); // Поле ввода логина
-let userPassword = document.querySelector('.input-password-user-popup'); // Поле ввода пароля
+    let popup = document.querySelector('.user-popup'); // Само окно
+    let openPopupButton = document.querySelector('.menu-user-panel'); // Кнопка для показа окна
+    let userBlock = document.querySelector('.user-box'); // Весь юзерблок (само окно + кнопка для показа)
+    let userCheckbox = document.querySelector('.remember-checkbox'); // Чекбокс
+    let userLogin = document.querySelector('.input-login-user-popup'); // Поле ввода логина
+    let userPassword = document.querySelector('.input-password-user-popup'); // Поле ввода пароля
 
-let coordsPopupButton = openPopupButton.getBoundingClientRect(); //Координаты кнопки показа окна
-let leftUserBlock = coordsPopupButton.left + (openPopupButton.offsetWidth - popup.offsetWidth) / 2; // Координаты позиционирования окна по горизонтали
-let topUserBlock = coordsPopupButton.top + openPopupButton.offsetHeight; // Координаты позиционирования окна по вертикали
-popup.style.left = leftUserBlock + 'px'; // Применение позиционирования окна по горизонтали
-popup.style.top = topUserBlock + 'px'; // Применение позиционирования окна по вертикали
+    let coordsPopupButton = openPopupButton.getBoundingClientRect(); //Координаты кнопки показа окна
+    let leftUserBlock = coordsPopupButton.left + (openPopupButton.offsetWidth - popup.offsetWidth) / 2; // Координаты позиционирования окна по горизонтали
+    let topUserBlock = coordsPopupButton.top + openPopupButton.offsetHeight; // Координаты позиционирования окна по вертикали
+    popup.style.left = leftUserBlock + 'px'; // Применение позиционирования окна по горизонтали
+    popup.style.top = topUserBlock + 'px'; // Применение позиционирования окна по вертикали
 
-userBlock.addEventListener('mouseenter', (e) => {
-    popup.classList.add('active');
+    userBlock.addEventListener('mouseenter', (e) => {
+        popup.classList.add('active');
 
-    userLogin.addEventListener('click', (e) => {
-        popup.classList.add('activetwo');
-    });
-
-    userPassword.addEventListener('click', (e) => {
-        popup.classList.add('activetwo');
-    });
-
-    userCheckbox.addEventListener('click', (e) => {
-        popup.classList.add('activetwo');
-    });
-
-    if (popup.classList.contains('activetwo')) {
-        document.addEventListener('click', (e) => {
-            if (e.target !== userLogin && e.target !== userPassword) {
-                popup.classList.remove('activetwo');
-            }
+        userLogin.addEventListener('click', (e) => {
+            popup.classList.add('activetwo');
         });
-    }
 
-    userBlock.addEventListener('mouseleave', (e) => {
-        popup.classList.remove('active');
+        userPassword.addEventListener('click', (e) => {
+            popup.classList.add('activetwo');
+        });
+
+        userCheckbox.addEventListener('click', (e) => {
+            popup.classList.add('activetwo');
+        });
+
+        if (popup.classList.contains('activetwo')) {
+            document.addEventListener('click', (e) => {
+                if (e.target !== userLogin && e.target !== userPassword) {
+                    popup.classList.remove('activetwo');
+                }
+            });
+        }
+
+        userBlock.addEventListener('mouseleave', (e) => {
+            popup.classList.remove('active');
+        });
     });
-});
 
 //конец userBlock
 
@@ -138,8 +138,6 @@ userBlock.addEventListener('mouseenter', (e) => {
         e.stopPropagation();
         toggleMenu();
     });
-
-
 
     document.addEventListener('click', e => {
         let target = e.target;
@@ -180,6 +178,166 @@ userBlock.addEventListener('mouseenter', (e) => {
     });
 //конец hamburgerBlock
 
+//начало categoryBlock
+
+    let popupCategory = document.querySelector('.widget-menu-category'); // Само окно
+    let openPopupCategoryButton = document.querySelector('.menu-category-item'); // Кнопка для показа окна
+    let categoryBlock = document.querySelector('.menu-category-item'); // Весь блок (само окно + кнопка для показа)
+    let imageCategoryBlock = document.querySelectorAll('.widget-menu-imageframe'); //Картинка в блоке
+    let textMenuCategories = document.querySelector('.text-menu-categories'); //Текст кнопки
+    let arrowMenuCategories = document.querySelector('.dropdown-category-icon'); //Стрелка
+
+
+    let coordsPopupCategoryButton = openPopupCategoryButton.getBoundingClientRect(); //Координаты кнопки показа окна
+    let leftCategoryBlock = coordsPopupCategoryButton.left + (openPopupCategoryButton.offsetWidth - popupCategory.offsetWidth) / 2; // Координаты позиционирования окна по горизонтали
+    let topCategoryBlock = coordsPopupCategoryButton.top + openPopupCategoryButton.offsetHeight; // Координаты позиционирования окна по вертикали
+    popupCategory.style.left = leftCategoryBlock + 'px'; // Применение позиционирования окна по горизонтали
+    popupCategory.style.top = topCategoryBlock + 'px'; // Применение позиционирования окна по вертикали
+
+
+    openPopupCategoryButton.addEventListener('mouseenter', (e) => {
+        openPopupCategoryButton.classList.add('active');
+        textMenuCategories.classList.add('active');
+        arrowMenuCategories.classList.add('active');
+
+        openPopupCategoryButton.addEventListener('mouseleave', (e) => {
+            openPopupCategoryButton.classList.remove('active');
+            textMenuCategories.classList.remove('active');
+            arrowMenuCategories.classList.remove('active');
+        });
+    });
+
+    categoryBlock.addEventListener('mouseenter', (e) => {
+        popupCategory.classList.add('active');
+
+        categoryBlock.addEventListener('mouseleave', (e) => {
+            popupCategory.classList.remove('active');
+        });
+    });
+
+    imageCategoryBlock.forEach((img) => {
+        img.addEventListener('mouseenter', (e) => {
+            img.classList.add('active');
+
+            img.addEventListener('mouseleave', (e) => {
+                img.classList.remove('active');
+            });
+        });
+    });
+
+//конец categoryBlock
+
+//начало stickyMenu
+    //начало searchBlock
+
+    let popupSearchSticky = document.querySelector('.menu-search-sticky'); // Само окно
+    let openSearchPopupButtonSticky = document.querySelector('.search-icon-box-sticky'); // Кнопка для показа окна
+    let headerMenuSticky = document.querySelector('.header-sticky-menu'); //Хэдер
+    let InputSearchSticky = document.querySelector('.input-search-sticky'); //Поле ввода для поиска
+
+    let coordsSearchPopupButtonSticky = openSearchPopupButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
+    let leftSearchPopupSticky = coordsSearchPopupButtonSticky.left + (openSearchPopupButtonSticky.offsetWidth - popupSearchSticky.offsetWidth); // Координаты позиционирования окна по горизонтали
+    let topSearchPopupSticky = coordsSearchPopupButtonSticky.top + openSearchPopupButtonSticky.offsetHeight + (headerMenuSticky.offsetHeight / 2) - 1; // Координаты позиционирования окна по вертикали
+    popupSearchSticky.style.left = leftSearchPopupSticky + 'px'; // Применение позиционирования окна по горизонтали
+    popupSearchSticky.style.top = topSearchPopupSticky + 'px'; // Применение позиционирования окна по вертикали
+
+    const toggleMenuSticky = () => {
+        popupSearchSticky.classList.toggle('active');
+        InputSearchSticky.focus();
+    }
+
+    openSearchPopupButtonSticky.addEventListener('click', e => {
+        e.stopPropagation();
+        toggleMenuSticky();
+    });
+
+    document.addEventListener('click', e => {
+        let targetSticky = e.target;
+        let its_SearchMenuSticky = targetSticky === popupSearchSticky || popupSearchSticky.contains(targetSticky);
+        let its_buttonSticky = targetSticky === openSearchPopupButtonSticky;
+        let menu_is_activeSticky = popupSearchSticky.classList.contains('active');
+
+        if (!its_SearchMenuSticky && !its_buttonSticky && menu_is_activeSticky) {
+            toggleMenuSticky();
+        }
+    })
+    //конец searchBlock
+
+    let popupCategorySticky = document.querySelector('.widget-menu-category-sticky'); // Само окно
+    let openPopupCategoryButtonSticky = document.querySelector('.menu-category-item-sticky'); // Кнопка для показа окна
+    let categoryBlockSticky = document.querySelector('.menu-category-item-sticky'); // Весь блок (само окно + кнопка для показа)
+    let imageCategoryBlockSticky = document.querySelectorAll('.widget-menu-imageframe-sticky'); //Картинка в блоке
+    let textMenuCategoriesSticky = document.querySelector('.text-menu-categories-sticky'); //Текст кнопки
+    let arrowMenuCategoriesSticky = document.querySelector('.dropdown-category-icon-sticky'); //Стрелка
+
+
+    let coordsPopupCategoryButtonSticky = openPopupCategoryButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
+    let leftCategoryBlockSticky = coordsPopupCategoryButtonSticky.left + (openPopupCategoryButtonSticky.offsetWidth - popupCategorySticky.offsetWidth) / 2; // Координаты позиционирования окна по горизонтали
+    let topCategoryBlockSticky = coordsPopupCategoryButtonSticky.top + openPopupCategoryButtonSticky.offsetHeight; // Координаты позиционирования окна по вертикали
+    popupCategorySticky.style.left = leftCategoryBlockSticky + 'px'; // Применение позиционирования окна по горизонтали
+    popupCategorySticky.style.top = topCategoryBlockSticky + 'px'; // Применение позиционирования окна по вертикали
+
+
+    openPopupCategoryButtonSticky.addEventListener('mouseenter', (e) => {
+        openPopupCategoryButtonSticky.classList.add('active');
+        textMenuCategoriesSticky.classList.add('active');
+        arrowMenuCategoriesSticky.classList.add('active');
+
+        openPopupCategoryButtonSticky.addEventListener('mouseleave', (e) => {
+            openPopupCategoryButtonSticky.classList.remove('active');
+            textMenuCategoriesSticky.classList.remove('active');
+            arrowMenuCategoriesSticky.classList.remove('active');
+        });
+    });
+
+    categoryBlockSticky.addEventListener('mouseenter', (e) => {
+        popupCategorySticky.classList.add('active');
+
+        categoryBlockSticky.addEventListener('mouseleave', (e) => {
+            popupCategorySticky.classList.remove('active');
+        });
+    });
+
+    imageCategoryBlockSticky.forEach((img) => {
+        img.addEventListener('mouseenter', (e) => {
+            img.classList.add('active');
+
+            img.addEventListener('mouseleave', (e) => {
+                img.classList.remove('active');
+            });
+        });
+    });
+
+    window.onscroll = function() {toggleStickyMenu()};
+
+    let navbar = document.querySelector('.header-sticky-menu'); // Само меню
+
+    let sticky = navbar.offsetTop; // Получаем позицию верха меню
+
+
+    function toggleStickyMenu() {   // Добавляем класс sticky когда прокручиваем ниже позиции верха меню. Удаляем "sticky" когда прокручиваем выше позиции.
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky")
+      } else {
+        navbar.classList.remove("sticky");
+      }
+
+      let coordsSearchPopupButtonSticky = openSearchPopupButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
+      let leftSearchPopupSticky = coordsSearchPopupButtonSticky.left + (openSearchPopupButtonSticky.offsetWidth - popupSearchSticky.offsetWidth); // Координаты позиционирования окна по горизонтали
+      let topSearchPopupSticky = coordsSearchPopupButtonSticky.top + openSearchPopupButtonSticky.offsetHeight + (headerMenuSticky.offsetHeight / 2) - 1; // Координаты позиционирования окна по вертикали
+      popupSearchSticky.style.left = leftSearchPopupSticky + 'px'; // Применение позиционирования окна по горизонтали
+      popupSearchSticky.style.top = topSearchPopupSticky + 'px'; // Применение позиционирования окна по вертикали
+
+      let coordsPopupCategoryButtonSticky = openPopupCategoryButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
+      let leftCategoryBlockSticky = coordsPopupCategoryButtonSticky.left + (openPopupCategoryButtonSticky.offsetWidth - popupCategorySticky.offsetWidth) / 2; // Координаты позиционирования окна по горизонтали
+      let topCategoryBlockSticky = coordsPopupCategoryButtonSticky.top + openPopupCategoryButtonSticky.offsetHeight; // Координаты позиционирования окна по вертикали
+      popupCategorySticky.style.left = leftCategoryBlockSticky + 'px'; // Применение позиционирования окна по горизонтали
+      popupCategorySticky.style.top = topCategoryBlockSticky + 'px'; // Применение позиционирования окна по вертикали
+
+    }
+
+// конец stickyMenu
+
 // начало resizeBloks
 
     window.addEventListener('resize', function(event) {
@@ -195,7 +353,34 @@ userBlock.addEventListener('mouseenter', (e) => {
         let topUserBlock = coordsPopupButton.top + openPopupButton.offsetHeight; // Координаты позиционирования окна по вертикали
         popup.style.left = leftUserBlock + 'px'; // Применение позиционирования окна по горизонтали
         popup.style.top = topUserBlock + 'px'; // Применение позиционирования окна по вертикали
+
+        let coordsPopupCategoryButton = openPopupCategoryButton.getBoundingClientRect(); //Координаты кнопки показа окна
+        let leftCategoryBlock = coordsPopupCategoryButton.left + (openPopupCategoryButton.offsetWidth - popupCategory.offsetWidth) / 2; // Координаты позиционирования окна по горизонтали
+        let topCategoryBlock = coordsPopupCategoryButton.top + openPopupCategoryButton.offsetHeight; // Координаты позиционирования окна по вертикали
+        popupCategory.style.left = leftCategoryBlock + 'px'; // Применение позиционирования окна по горизонтали
+        popupCategory.style.top = topCategoryBlock + 'px'; // Применение позиционирования окна по вертикали
+        if (leftCategoryBlock < 0){
+            popupCategory.style.left = 0 + 'px';
+        }
+
+        let coordsPopupCategoryButtonSticky = openPopupCategoryButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
+        let leftCategoryBlockSticky = coordsPopupCategoryButtonSticky.left + (openPopupCategoryButtonSticky.offsetWidth - popupCategorySticky.offsetWidth) / 2; // Координаты позиционирования окна по горизонтали
+        let topCategoryBlockSticky = coordsPopupCategoryButtonSticky.top + openPopupCategoryButtonSticky.offsetHeight; // Координаты позиционирования окна по вертикали
+        popupCategorySticky.style.left = leftCategoryBlockSticky + 'px'; // Применение позиционирования окна по горизонтали
+        popupCategorySticky.style.top = topCategoryBlockSticky + 'px'; // Применение позиционирования окна по вертикали
+        if (leftCategoryBlockSticky < 0){
+            popupCategorySticky.style.left = 0 + 'px';
+        }
+
+        let coordsSearchPopupButtonSticky = openSearchPopupButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
+        let leftSearchPopupSticky = coordsSearchPopupButtonSticky.left + (openSearchPopupButtonSticky.offsetWidth - popupSearchSticky.offsetWidth); // Координаты позиционирования окна по горизонтали
+        let topSearchPopupSticky = coordsSearchPopupButtonSticky.top + openSearchPopupButtonSticky.offsetHeight + (headerMenuSticky.offsetHeight / 2) - 1; // Координаты позиционирования окна по вертикали
+        popupSearchSticky.style.left = leftSearchPopupSticky + 'px'; // Применение позиционирования окна по горизонтали
+        popupSearchSticky.style.top = topSearchPopupSticky + 'px'; // Применение позиционирования окна по вертикали
+
     }, false);
-}
 
 //конец resizeBlocks
+
+}
+

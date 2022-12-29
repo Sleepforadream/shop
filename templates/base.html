@@ -32,6 +32,24 @@
             </div>
         </form>
     </div>
+    <div class="menu-search-sticky" id="div3" data-some-data-attr="mydata">
+        <form class="search-form" method="get" action="http://doors-kd.ru/">
+            <div class="search-form-content">
+                <div class="search-field">
+                    <p class="text-search"><input type="text" class="input-search-sticky" name="log" id="search2"
+                                                  value=""
+                                                  placeholder="Поиск ...">
+                        <input type="hidden" name="login_box" value="true"></p>
+                </div>
+                <div class="search-button">
+                    <p class="button-box-enter-user">
+                        <input type="submit" name="submit" id="submit3" class="button-search"
+                               value=" ">
+                        <input type="hidden" name="redirect" value=""></p>
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="second-container-header">
         <div class="second-menu-wrapper">
             <div class="left-second-header">
@@ -82,6 +100,150 @@
     </div>
 </header>
 
+<header class="header-sticky-menu">
+
+    <div class="container-header">
+        <div class="menu-wrapper">
+            <a href="/" class="menu-logo">
+                <img class=img_logo1 src="/static\img\logos\logo-kd-main.png"
+                     title="menu-logo"
+                     alt="Лого1" aria-label="Logo">
+                <use xlink:href="#"></use>
+            </a>
+
+            <ul class="menu-categories">
+                {% if request.endpoint == "index" %}
+                <li style="padding-right:40px!important;"><a href="/" class="text-menu hover">Главная</a></li>
+                {% else %}
+                <li style="padding-right:40px!important;"><a href="/" class="text-menu">Главная</a></li>
+                {% endif %}
+                <li style="padding-right:40px!important;">
+                    <div class="menu-category-item-sticky">
+                        <span class="text-menu-categories-sticky">Категории</span>
+                        <span aria-label="Открыть подменю Категории" aria-expanded="false">
+                            <svg class="dropdown-category-icon-sticky"
+                                 width="10"
+                                 height="10"
+                                 viewBox="0 -10 256 256"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                 <polyline points="208 96 128 176 48 96" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+                            </svg>
+                        </span>
+                        <div class="widget-menu-category-sticky">
+                            <div class="widget-menu-category-holder">
+                                <ul role="menu" class="widget-menu-box">
+                                    <li class="menu-item-doors-mk">
+                                        <div class="widget-menu-item-title">
+                                            <a class="widget-menu-title" href="http://doors-kd.ru/md/">Межкомнатные
+                                                двери</a>
+                                        </div>
+                                        <div class="widget-menu-category-second-level">
+                                            <div class="imageframe-liftup">
+                                                <span class="widget-menu-imageframe-sticky">
+                                                    <a class="widget-menu-lightbox" href="http://doors-kd.ru/md/"
+                                                       target="_self" rel="noopener noreferrer">
+                                                        <img src="../static/img/menu/Category-mk.jpg"
+                                                             data-orig-src="../img/menu/Category-mk.jpg"
+                                                             alt="" class="widget-menu-img">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="menu-item-doors-mk">
+                                        <div class="widget-menu-item-title">
+                                            <a class="widget-menu-title" href="http://doors-kd.ru/md/">Входные
+                                                двери</a>
+                                        </div>
+                                        <div class="widget-menu-category-second-level">
+                                            <div class="imageframe-liftup">
+                                                <span class="widget-menu-imageframe-sticky">
+                                                    <a class="widget-menu-lightbox" href="http://doors-kd.ru/md/"
+                                                       target="_self" rel="noopener noreferrer">
+                                                        <img src="../static/img/menu/Category-vd.jpg"
+                                                             data-orig-src="../static/img/menu/Category-vd.jpg"
+                                                             alt="" class="widget-menu-img">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="menu-item-doors-mk">
+                                        <div class="widget-menu-item-title">
+                                            <a class="widget-menu-title" href="http://doors-kd.ru/md/">Фурнитура</a>
+                                        </div>
+                                        <div class="widget-menu-category-second-level">
+                                            <div class="imageframe-liftup">
+                                                <span class="widget-menu-imageframe-sticky">
+                                                    <a class="widget-menu-lightbox" href="http://doors-kd.ru/md/"
+                                                       target="_self" rel="noopener noreferrer">
+                                                        <img src="../static/img/menu/Category-furniture.jpg"
+                                                             data-orig-src="../static/img/menu/Category-furniture.jpg"
+                                                             alt="" class="widget-menu-img">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="menu-item-doors-mk">
+                                        <div class="widget-menu-item-title">
+                                            <a class="widget-menu-title" href="http://doors-kd.ru/md/">Погонажные
+                                                изделия</a>
+                                        </div>
+                                        <div class="widget-menu-category-second-level">
+                                            <div class="imageframe-liftup">
+                                                <span class="widget-menu-imageframe-sticky">
+                                                    <a class="widget-menu-lightbox" href="http://doors-kd.ru/md/"
+                                                       target="_self" rel="noopener noreferrer">
+                                                        <img src="../static/img/menu/Category-pg.jpg"
+                                                             data-orig-src="../static/img/menu/Category-pg.jpg"
+                                                             alt="" class="widget-menu-img">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>
+                </li>
+                {% if request.endpoint == "headings" %}
+                <li style="padding-right:40px!important;"><a href="/headings" class="text-menu hover">Блог</a></li>
+                {% else %}
+                <li style="padding-right:40px!important;"><a href="/headings" class="text-menu">Блог</a></li>
+                {% endif %}
+                {% if request.endpoint == "about" %}
+                <li style="padding-right:40px!important;"><a href="/about" class="text-menu hover">О нас</a></li>
+                {% else %}
+                <li style="padding-right:40px!important;"><a href="/about" class="text-menu">О нас</a></li>
+                {% endif %}
+                {% if request.endpoint == "about" %}
+                <li style="padding-right:40px!important;"><a href="/about" class="text-menu hover">Контакты</a></li>
+                {% else %}
+                <li style="padding-right:40px!important;"><a href="/about" class="text-menu">Контакты</a></li>
+                {% endif %}
+            </ul>
+
+            <form class="menu-right" role="search">
+                <a href="/create-article" class="button-enter-user medium menu">Запись на замер</a>
+                <div class="search-icon-box-sticky">
+                    <svg class="search-icon" width="800px" height="800px" viewBox="0 0 52 52"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M49.62,45.27,36.22,32a18.9,18.9,0,1,0-34.1-9.2A18.91,18.91,0,0,0,32,36.27l13.3,13.3a1.45,1.45,0,0,0,2.1,0l2.1-2.1A1.68,1.68,0,0,0,49.62,45.27Zm-28.7-11.5a12.9,12.9,0,1,1,12.9-12.9A12.87,12.87,0,0,1,20.92,33.77Z"/>
+                    </svg>
+                </div>
+            </form>
+
+            <div class="hamburger-menu"></div>
+        </div>
+    </div>
+</header>
+
 <header class="header-menu">
 
     <div class="container-header">
@@ -99,18 +261,101 @@
                 {% else %}
                 <li style="padding-right:40px!important;"><a href="/" class="text-menu">Главная</a></li>
                 {% endif %}
-                {% if request.endpoint == "posts" %}
-                <li style="padding-right:40px!important;"><a href="/posts" class="text-menu hover">Категории</a></li>
-                {% else %}
                 <li style="padding-right:40px!important;">
-                    <a class="menu-category-item">
+                    <div class="menu-category-item">
                         <span class="text-menu-categories">Категории</span>
-                        <span aria-label="Открыть подменю Категории" aria-expanded="false"
-                           class="indicator-dropdown-small">
+                        <span aria-label="Открыть подменю Категории" aria-expanded="false">
+                            <svg class="dropdown-category-icon"
+                                 width="10"
+                                 height="10"
+                                 viewBox="0 -10 256 256"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                 <polyline points="208 96 128 176 48 96" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+                            </svg>
                         </span>
-                    </a>
+                        <div class="widget-menu-category">
+                            <div class="widget-menu-category-holder">
+                                <ul role="menu" class="widget-menu-box">
+                                    <li id="menu-item-doors-mk" class="menu-item-doors-mk">
+                                        <div class="widget-menu-item-title">
+                                            <a class="widget-menu-title" href="http://doors-kd.ru/md/">Межкомнатные
+                                                двери</a>
+                                        </div>
+                                        <div class="widget-menu-category-second-level">
+                                            <div class="imageframe-liftup">
+                                                <span class="widget-menu-imageframe">
+                                                    <a class="widget-menu-lightbox" href="http://doors-kd.ru/md/"
+                                                       target="_self" rel="noopener noreferrer">
+                                                        <img src="../static/img/menu/Category-mk.jpg"
+                                                             data-orig-src="../img/menu/Category-mk.jpg"
+                                                             alt="" class="widget-menu-img">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li id="menu-item-doors-mk2" class="menu-item-doors-mk">
+                                        <div class="widget-menu-item-title">
+                                            <a class="widget-menu-title" href="http://doors-kd.ru/md/">Входные
+                                                двери</a>
+                                        </div>
+                                        <div class="widget-menu-category-second-level">
+                                            <div class="imageframe-liftup">
+                                                <span class="widget-menu-imageframe">
+                                                    <a class="widget-menu-lightbox" href="http://doors-kd.ru/md/"
+                                                       target="_self" rel="noopener noreferrer">
+                                                        <img src="../static/img/menu/Category-vd.jpg"
+                                                             data-orig-src="../static/img/menu/Category-vd.jpg"
+                                                             alt="" class="widget-menu-img">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li id="menu-item-doors-mk3" class="menu-item-doors-mk">
+                                        <div class="widget-menu-item-title">
+                                            <a class="widget-menu-title" href="http://doors-kd.ru/md/">Фурнитура</a>
+                                        </div>
+                                        <div class="widget-menu-category-second-level">
+                                            <div class="imageframe-liftup">
+                                                <span class="widget-menu-imageframe">
+                                                    <a class="widget-menu-lightbox" href="http://doors-kd.ru/md/"
+                                                       target="_self" rel="noopener noreferrer">
+                                                        <img src="../static/img/menu/Category-furniture.jpg"
+                                                             data-orig-src="../static/img/menu/Category-furniture.jpg"
+                                                             alt="" class="widget-menu-img">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li id="menu-item-doors-mk4" class="menu-item-doors-mk">
+                                        <div class="widget-menu-item-title">
+                                            <a class="widget-menu-title" href="http://doors-kd.ru/md/">Погонажные
+                                                изделия</a>
+                                        </div>
+                                        <div class="widget-menu-category-second-level">
+                                            <div class="imageframe-liftup">
+                                                <span class="widget-menu-imageframe">
+                                                    <a class="widget-menu-lightbox" href="http://doors-kd.ru/md/"
+                                                       target="_self" rel="noopener noreferrer">
+                                                        <img src="../static/img/menu/Category-pg.jpg"
+                                                             data-orig-src="../static/img/menu/Category-pg.jpg"
+                                                             alt="" class="widget-menu-img">
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>
                 </li>
-                {% endif %}
                 {% if request.endpoint == "headings" %}
                 <li style="padding-right:40px!important;"><a href="/headings" class="text-menu hover">Блог</a></li>
                 {% else %}
@@ -142,6 +387,7 @@
         </div>
     </div>
 </header>
+
 <header class="mobile-menu-box">
     <nav class="mobile-menu" aria-label="Главное мобильное меню" style="display: block;">
         <ul class="mobile-menu-list">
