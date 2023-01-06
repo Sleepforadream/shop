@@ -225,20 +225,23 @@ window.onload = function () {
 //конец categoryBlock
 
 //начало footerTextHover
-    let hoverButton = document.querySelector('.text-footer-list'); // Кнопка для показа окна
-    let hoverButtonBlock = document.querySelectorAll('.footer-list'); // Блок для показа ховера
 
-    const hoverFooterText = () => {
-        hoverButton.classList.toggle('active');
+    let hoverBlock = document.querySelectorAll('.footer-fresh-articles'); // Блок для показа ховера
+
+    function hoverFooterText(text,icon) {
+        text.classList.toggle('active');
+        icon.classList.toggle('active');
     }
 
-    hoverButtonBlock.forEach((button) => {
+    hoverBlock.forEach((button) => {
+        let footerText = button.querySelector('.text-footer-list')
+        let footerDropdown = button.querySelector('.dropdown-footer-icon')
         button.addEventListener('mouseenter', e => {
-            hoverFooterText();
+            hoverFooterText(footerText,footerDropdown);
         });
 
         button.addEventListener('mouseleave', e => {
-                hoverFooterText();
+                hoverFooterText(footerText,footerDropdown);
         });
     });
 

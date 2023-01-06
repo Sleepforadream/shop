@@ -1904,12 +1904,12 @@ height: 43px;
 
 .footer-list{
     display: block;
-    padding: 10px 10px 10px 12px;
+    padding: 10px 10px 10px 2px;
     border-bottom: 1px solid #e7e6e6;
     position: relative;
     border-color: #35383c;
     color: #eaeaea;
-    cursor: pointer;
+    width: 100%;
 }
 
 .text-footer-list{
@@ -1921,4 +1921,34 @@ height: 43px;
 
 .text-footer-list.active{
     color: #427ed1;
+}
+
+.dropdown-footer-icon{
+    stroke: #eaeaea;
+    transform: rotate(-90deg);
+    overflow: inherit;
+    transition: 0.3s;
+}
+
+
+.dropdown-footer-icon.active{
+    stroke: #427ed1;
+}
+
+.footer-fresh-articles{
+    display: flex;
+    align-items: baseline;
+    cursor: pointer;
+}
+
+.widget-title{
+    font-family: Karla, Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0px;
+    font-style: normal;
+    color: #ffffff;
+    margin: 0 0 28px;
+    text-transform: uppercase;
 }
