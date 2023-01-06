@@ -18,7 +18,6 @@ window.onload = function () {
 
         // ...создадим элемент для подсказки
 
-
         tooltipInner = document.createElement('div');
         arrow = document.createElement('div');
 
@@ -37,8 +36,7 @@ window.onload = function () {
         let leftTooltip = coords.left + (target.offsetWidth - tooltipInner.offsetWidth) / 2;
         let leftTooltip2 = coords.left + (target.offsetWidth) / 2
 
-        let topTooltip = coords.top + 2 + target.offsetHeight;
-
+        let topTooltip = coords.top + window.pageYOffset + 2 + target.offsetHeight;
 
         tooltipInner.style.left = leftTooltip + 'px';
         tooltipInner.style.top = topTooltip + 2 + 'px';
@@ -55,7 +53,6 @@ window.onload = function () {
     };
 
     document.onmouseout = function () {
-
 
         if (tooltipInner) {
             tooltipInner.remove();
@@ -125,7 +122,7 @@ window.onload = function () {
 
     let coordsSearchPopupButton = openSearchPopupButton.getBoundingClientRect(); //Координаты кнопки показа окна
     let leftSearchPopup = coordsSearchPopupButton.left + (openSearchPopupButton.offsetWidth - popupSearch.offsetWidth); // Координаты позиционирования окна по горизонтали
-    let topSearchPopup = coordsSearchPopupButton.top + openSearchPopupButton.offsetHeight + (headerMenu.offsetHeight / 2) - 1; // Координаты позиционирования окна по вертикали
+    let topSearchPopup = coordsSearchPopupButton.top + openSearchPopupButton.offsetHeight + (headerMenu.offsetHeight / 2) - 1.5; // Координаты позиционирования окна по вертикали
     popupSearch.style.left = leftSearchPopup + 'px'; // Применение позиционирования окна по горизонтали
     popupSearch.style.top = topSearchPopup + 'px'; // Применение позиционирования окна по вертикали
 
@@ -227,6 +224,26 @@ window.onload = function () {
 
 //конец categoryBlock
 
+//начало footerTextHover
+    let hoverButton = document.querySelector('.text-footer-list'); // Кнопка для показа окна
+    let hoverButtonBlock = document.querySelectorAll('.footer-list'); // Блок для показа ховера
+
+    const hoverFooterText = () => {
+        hoverButton.classList.toggle('active');
+    }
+
+    hoverButtonBlock.forEach((button) => {
+        button.addEventListener('mouseenter', e => {
+            hoverFooterText();
+        });
+
+        button.addEventListener('mouseleave', e => {
+                hoverFooterText();
+        });
+    });
+
+//конец footerTextHover
+
 //начало stickyMenu
     //начало searchBlock
 
@@ -237,7 +254,7 @@ window.onload = function () {
 
     let coordsSearchPopupButtonSticky = openSearchPopupButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
     let leftSearchPopupSticky = coordsSearchPopupButtonSticky.left + (openSearchPopupButtonSticky.offsetWidth - popupSearchSticky.offsetWidth); // Координаты позиционирования окна по горизонтали
-    let topSearchPopupSticky = coordsSearchPopupButtonSticky.top + openSearchPopupButtonSticky.offsetHeight + (headerMenuSticky.offsetHeight / 2) - 1; // Координаты позиционирования окна по вертикали
+    let topSearchPopupSticky = window.pageYOffset + 75; // Координаты позиционирования окна по вертикали
     popupSearchSticky.style.left = leftSearchPopupSticky + 'px'; // Применение позиционирования окна по горизонтали
     popupSearchSticky.style.top = topSearchPopupSticky + 'px'; // Применение позиционирования окна по вертикали
 
@@ -311,22 +328,30 @@ window.onload = function () {
     window.onscroll = function() {toggleStickyMenu()};
 
     let navbar = document.querySelector('.header-sticky-menu'); // Само меню
+    let rightStickyMenu = document.querySelector('.menu-right-sticky');
 
     let sticky = navbar.offsetTop; // Получаем позицию верха меню
-
 
     function toggleStickyMenu() {   // Добавляем класс sticky когда прокручиваем ниже позиции верха меню. Удаляем "sticky" когда прокручиваем выше позиции.
       if (window.pageYOffset >= sticky) {
         navbar.classList.add("sticky")
-      } else {
-        navbar.classList.remove("sticky");
-      }
+        rightStickyMenu.classList.add("scroll")
 
-      let coordsSearchPopupButtonSticky = openSearchPopupButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
-      let leftSearchPopupSticky = coordsSearchPopupButtonSticky.left + (openSearchPopupButtonSticky.offsetWidth - popupSearchSticky.offsetWidth); // Координаты позиционирования окна по горизонтали
-      let topSearchPopupSticky = coordsSearchPopupButtonSticky.top + openSearchPopupButtonSticky.offsetHeight + (headerMenuSticky.offsetHeight / 2) - 1; // Координаты позиционирования окна по вертикали
-      popupSearchSticky.style.left = leftSearchPopupSticky + 'px'; // Применение позиционирования окна по горизонтали
-      popupSearchSticky.style.top = topSearchPopupSticky + 'px'; // Применение позиционирования окна по вертикали
+        let coordsSearchPopupButtonSticky = openSearchPopupButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
+        let leftSearchPopupSticky = coordsSearchPopupButtonSticky.left + (openSearchPopupButtonSticky.offsetWidth - popupSearchSticky.offsetWidth); // Координаты позиционирования окна по горизонтали
+        let topSearchPopupSticky = window.pageYOffset + 75; // Координаты позиционирования окна по вертикали
+        popupSearchSticky.style.left = leftSearchPopupSticky + 'px'; // Применение позиционирования окна по горизонтали
+        popupSearchSticky.style.top = topSearchPopupSticky + 'px'; // Применение позиционирования окна по вертикали
+      } else {
+        navbar.classList.remove("sticky")
+        rightStickyMenu.classList.remove("scroll")
+
+        let coordsSearchPopupButtonSticky = openSearchPopupButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
+        let leftSearchPopupSticky = coordsSearchPopupButtonSticky.left + (openSearchPopupButtonSticky.offsetWidth - popupSearchSticky.offsetWidth); // Координаты позиционирования окна по горизонтали
+        let topSearchPopupSticky = window.pageYOffset + 127; // Координаты позиционирования окна по вертикали
+        popupSearchSticky.style.left = leftSearchPopupSticky + 'px'; // Применение позиционирования окна по горизонтали
+        popupSearchSticky.style.top = topSearchPopupSticky + 'px'; // Применение позиционирования окна по вертикали
+      }
 
       let coordsPopupCategoryButtonSticky = openPopupCategoryButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
       let leftCategoryBlockSticky = coordsPopupCategoryButtonSticky.left + (openPopupCategoryButtonSticky.offsetWidth - popupCategorySticky.offsetWidth) / 2; // Координаты позиционирования окна по горизонтали
@@ -373,10 +398,10 @@ window.onload = function () {
         }
 
         let coordsSearchPopupButtonSticky = openSearchPopupButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна
-        let leftSearchPopupSticky = coordsSearchPopupButtonSticky.left + (openSearchPopupButtonSticky.offsetWidth - popupSearchSticky.offsetWidth); // Координаты позиционирования окна по горизонтали
-        let topSearchPopupSticky = coordsSearchPopupButtonSticky.top + openSearchPopupButtonSticky.offsetHeight + (headerMenuSticky.offsetHeight / 2) - 1; // Координаты позиционирования окна по вертикали
-        popupSearchSticky.style.left = leftSearchPopupSticky + 'px'; // Применение позиционирования окна по горизонтали
-        popupSearchSticky.style.top = topSearchPopupSticky + 'px'; // Применение позиционирования окна по вертикали
+    let leftSearchPopupSticky = coordsSearchPopupButtonSticky.left + (openSearchPopupButtonSticky.offsetWidth - popupSearchSticky.offsetWidth); // Координаты позиционирования окна по горизонтали
+    let topSearchPopupSticky = window.pageYOffset + 75; // Координаты позиционирования окна по вертикали
+    popupSearchSticky.style.left = leftSearchPopupSticky + 'px'; // Применение позиционирования окна по горизонтали
+    popupSearchSticky.style.top = topSearchPopupSticky + 'px'; // Применение позиционирования окна по вертикали
 
     }, false);
 

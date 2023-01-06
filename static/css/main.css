@@ -478,10 +478,97 @@ height: 43px;
   opacity: .8;
 }
 
-svg path {
-    fill:inherit;
-    stroke:inherit;
-    stroke-width:inherit;
+
+
+.vk-icon-footer{
+    content: url(../img/icons/icon-vk-footer.svg);
+    width: 16px;
+    height: 16px;
+    margin-right: 15px;
+}
+
+@media (max-width: 1050px){
+.vk-icon-footer{
+    margin-right: 25px;
+}
+}
+
+.vk-icon-footer:hover{
+  opacity: .8;
+}
+
+.facebook-icon-footer{
+    content: url(../img/icons/icon-facebook-footer.svg);
+    width: 16px;
+    height: 16px;
+    margin-right: 15px;
+    margin-left: 4px;
+}
+
+@media (max-width: 1050px){
+.facebook-icon-footer{
+    margin-right: 25px;
+}
+}
+
+
+.facebook-icon-footer:hover{
+  opacity: .8;
+}
+
+.instagram-icon-footer{
+    content: url(../img/icons/icon-instagram-footer.svg);
+    width: 14.5px;
+    height: 14.5px;
+    margin-right: 15px;
+    margin-bottom: 1px;
+    margin-left: 2px;
+}
+
+@media (max-width: 1050px){
+.instagram-icon-footer{
+    margin-right: 25px;
+}
+}
+
+.instagram-icon-footer:hover{
+  opacity: .8;
+}
+
+.whatsapp-icon-footer{
+    content: url(../img/icons/icon-whatsapp-footer.svg);
+    width: 16px;
+    height: 16px;
+    margin-right: 15px;
+    margin-left: 2px;
+}
+
+@media (max-width: 1050px){
+.whatsapp-icon-footer{
+    margin-right: 25px;
+}
+}
+
+.whatsapp-icon-footer:hover{
+  opacity: .8;
+}
+
+.twitter-icon-footer{
+    content: url(../img/icons/icon-twitter-footer.svg);
+    width: 16px;
+    height: 16px;
+    margin-right: 15px;
+    margin-left: 2px;
+}
+
+@media (max-width: 1050px){
+.twitter-icon-footer{
+    margin-right: 25px;
+}
+}
+
+.twitter-icon-footer:hover{
+  opacity: .8;
 }
 
 .search-icon{
@@ -622,6 +709,10 @@ svg path {
     stroke: #d32e2e;
 }
 
+
+.search-icon:hover{
+    fill: #d32e2e;
+}
 
 .search-icon:hover{
     fill: #d32e2e;
@@ -1141,6 +1232,15 @@ svg path {
     margin-bottom: 8px;
 }
 
+.menu-right-sticky{
+    margin-bottom: 8px;
+    height: 0px;
+}
+
+.menu-right-sticky.scroll{
+    height: auto;
+}
+
 @media (max-width: 1050px){
 .menu-right{
     display: none;
@@ -1608,10 +1708,6 @@ svg path {
 }
 
 .button-enter-user{
-    -webkit-text-size-adjust: 100%;
-    --header_border_color: #eaeaea;
-    --header_sticky_bg_color: rgba(255,255,255,0.987);
-    --header_top_bg_color: #ffffff;
     --snav_color: #808080;
     --topmenu_dropwdown_width: 200px;
     --header_top_first_border_color: #eaeaea;
@@ -1678,4 +1774,151 @@ svg path {
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
    color:    #aaa9a9;
+}
+
+.footer-columns{
+    -webkit-text-size-adjust: 100%;
+    font: 13px/20px PTSansRegular,Arial,Helvetica,sans-serif;
+    font-family: var(--body_typography-font-family);
+    font-weight: var(--body_typography-font-weight);
+    letter-spacing: var(--body_typography-letter-spacing);
+    font-style: var(--body_typography-font-style,normal);
+    font-size: var(--body_typography-font-size);
+    line-height: var(--body_typography-line-height);
+    --footer_area_padding-top: 55px;
+    --footer_area_padding-bottom: 60px;
+    --footer_area_padding-left: 0px;
+    --footer_area_padding-right: 0px;
+    --footer_divider_line-flex: block;
+    --footer_divider_line_size: 1px;
+    --footer_divider_line_style: solid;
+    --footer_widgets_padding: 15px;
+    color: var(--footer_text_color);
+    --footerw_bg_image: ;
+    --footerw_bg_full-size: cover;
+    --footerw_bg_full-position: center center;
+    --footerw_bg_repeat: repeat;
+    --footerw_bg_pos: top left;
+    --footer_bg_color: #2b2e32;
+    --footer_border_size: 12px;
+    --footer_border_color: rgba(255,255,255,0);
+    --footer_link_color: #eaeaea;
+    --footer_link_color_hover: #427ed1;
+    box-sizing: border-box;
+    position: relative;
+    min-height: 1px;
+    float: left;
+    width: 25%;
+    clear: both;
+    padding-left: var(--footer_widgets_padding);
+    padding-right: var(--footer_widgets_padding);
+    }
+
+.footer-widget-area{
+    box-sizing: border-box;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    border-top: 12px solid #e9eaee;
+    background: #363839;
+    backface-visibility: hidden;
+    background-image: var(--footerw_bg_image);
+    background-repeat: var(--footerw_bg_repeat);
+    padding-top: 55px;
+    padding-bottom: 60px;
+    background-color: #2b2e32;
+    border-top-width: 12px;
+    border-color: rgba(255,255,255,0);
+    background-size: cover;
+    background-position: center center;
+    color: #eaeaea;
+    --footerw_bg_image: ;
+    --footerw_bg_full-size: cover;
+    --footerw_bg_full-position: center center;
+    --footerw_bg_repeat: repeat;
+    --footerw_bg_pos: top left;
+    background-color: #2b2e32;
+    border-size: 12px;
+    border-color: rgba(255,255,255,0);
+    link-color: #eaeaea;
+    link-color-hover: #427ed1;
+    background-attachment: scroll!important;
+    padding-left: 15px;
+    padding-right: 15px;
+    }
+
+.footer-column1{
+    width: 25%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    zoom: 1;
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 100%!important;
+
+}
+
+.footer-column2{
+    width: 25%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    zoom: 1;
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 100%!important;
+}
+
+.footer-column3{
+    width: 25%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    zoom: 1;
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 100%!important;
+}
+
+.footer-column4{
+    width: 25%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    zoom: 1;
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 100%!important;
+}
+
+.text-widget{
+
+    margin-bottom: 50px;
+}
+
+.footer-widget-text{
+    line-height: 1.87;
+    font-size: 14px;
+    font-family: Karla, Helvetica, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0;
+    font-style: normal;
+}
+
+.footer-list{
+    display: block;
+    padding: 10px 10px 10px 12px;
+    border-bottom: 1px solid #e7e6e6;
+    position: relative;
+    border-color: #35383c;
+    color: #eaeaea;
+    cursor: pointer;
+}
+
+.text-footer-list{
+    color: #eaeaea;
+    text-decoration: none;
+    transition: 0.3s;
+
+}
+
+.text-footer-list.active{
+    color: #427ed1;
 }
