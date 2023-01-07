@@ -332,11 +332,14 @@ window.onload = function () {
 
     let navbar = document.querySelector('.header-sticky-menu'); // Само меню
     let rightStickyMenu = document.querySelector('.menu-right-sticky');
+    let toTopMenu = document.querySelector('.to-top-container');
 
     let sticky = navbar.offsetTop; // Получаем позицию верха меню
 
     function toggleStickyMenu() {   // Добавляем класс sticky когда прокручиваем ниже позиции верха меню. Удаляем "sticky" когда прокручиваем выше позиции.
       if (window.pageYOffset >= sticky) {
+
+        toTopMenu.classList.add("active")
         navbar.classList.add("sticky")
         rightStickyMenu.classList.add("scroll")
 
@@ -346,6 +349,7 @@ window.onload = function () {
         popupSearchSticky.style.left = leftSearchPopupSticky + 'px'; // Применение позиционирования окна по горизонтали
         popupSearchSticky.style.top = topSearchPopupSticky + 'px'; // Применение позиционирования окна по вертикали
       } else {
+        toTopMenu.classList.remove("active")
         navbar.classList.remove("sticky")
         rightStickyMenu.classList.remove("scroll")
 
