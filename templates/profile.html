@@ -6,7 +6,7 @@
 
 {% block body %}
 {% if user == None %}
-<div class="container profile-main">
+<div class="profile-main">
     <div class="user-title">
         <hr>
         <br>
@@ -17,9 +17,11 @@
     </div>
 </div>
 {% else %}
-<div class="container profile-main">
+<div class="profile-main">
     <div class="user-title">
-        <hr>
+        <div class="separator-with-shadow" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0;">
+            <div class="separator-with-shadow-box" style="margin-top: 0px;"></div>
+        </div>
         <br>
         <h2><img class="user-img-profile" src='/{{ user.imgpath }}' alt="mdo" width="64" height="64">
             Профиль пользователя "{{ user.name }}"
@@ -37,11 +39,11 @@
         <hr>
         <a><b>Автор статей:</b>
             {% for article in articles %}
-            {% if article.author == user.name %}
-            {% if article.private == None or element.author == current_user.name %}
-            <a href="/posts/{{ article.id }}"> {{ article.title }}</a>
-            {% endif %}
-            {% endif %}
+                {% if article.author == user.name %}
+                    {% if article.private == None or article.author == current_user.name %}
+                        <a href="/posts/{{ article.id }}"> {{ article.title }}</a>
+                    {% endif %}
+                {% endif %}
             {% endfor %}
         </a>
     </div>

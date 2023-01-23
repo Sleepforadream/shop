@@ -91,13 +91,15 @@ def about():
     return render_template("about.html")
 
 
-@app.route('/shop2')
-def shop2():
-    return render_template("shop2.html")
+@app.route('/contacts')
+def contacts():
+    return render_template("contacts.html")
 
-@app.route('/userLoginWindow')
-def user_login_window():
-    return render_template("userLoginWindow.html")
+
+@app.route('/sample')
+def sample():
+    return render_template("sample.html")
+
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -158,11 +160,6 @@ def login_success():
     return render_template("login_success.html")
 
 
-@app.route('/123')
-def log123():
-    return render_template("macros.html")
-
-
 @app.route('/admin_panel')
 @login_required
 def admin_panel():
@@ -199,6 +196,10 @@ def login():
             remember = False
 
         users = Authorization.query.order_by(Authorization.date.desc()).all()
+
+        if email == "" or password == "":
+            error = "Были заполнены не все обязательные поля"
+            return render_template("login.html", error=error)
 
         for user in users:
             if user.email == email:

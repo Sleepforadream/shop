@@ -5,37 +5,55 @@
 {% endblock %}
 
 {% block body %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/registerScripts.js') }}" defer></script>
 <body class="text-center">
+<div class="separator-with-shadow" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0;">
+    <div class="separator-with-shadow-box" style="margin-top: 0px;"></div>
+</div>
 
-<main class="signin-form">
-    {% if error != "" %}
-    <div class="error-register-block">
-        <p class="error-register">{{ error }}</p>
-    </div>
-    {% endif %}
-    <form method="post" enctype="multipart/form-data">
-        <img class="login-logo-image" src="/static/img/NEWS BLOG_free-file (1).png" alt="logo" width="140" height="44">
-        <h1 class="login-title">Пожалуйста войдите</h1>
+{% if error != "" %}
+<div class="error-register-block">
+    <p class="error-register">{{ error }}</p>
+</div>
+{% else %}
+<div class="error-register-block" style="display:none;">
+    <p class="error-register">{{ error }}</p>
+</div>
+{% endif %}
 
-        <div class="login-form">
-            <input type="email" class="login-form-control" name="floatingInput" id="floatingInput" placeholder="имя@пример.com">
-            <label for="floatingInput">Электронная почта</label>
+<main class="signup-form">
+
+
+    <form method="post" class="main-form" enctype="multipart/form-data">
+        <div class="login-main">
+            <div class="separator-with-shadow" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0;">
+                <div class="separator-with-shadow-box" style="margin-top: 0px;"></div>
+            </div>
+            <h1 class="login-title">Введите данные для входа</h1>
+            <div class="separator-with-shadow" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0;">
+                <div class="separator-with-shadow-box" style="margin-top: 0px;"></div>
+            </div>
+            <div class="login-form" style="margin-bottom:20px;margin-top:20px;">
+                <div class="form-control-title">Электронная почта*</div>
+                <input type="email" class="form-control" id="floatingInput" name="floatingInput"
+                       placeholder="Введите свою электронную почту">
+            </div>
+            <div class="login-form">
+                <div class="form-control-title">Пароль*</div>
+                <input type="password" class="form-control" id="floatingPassword" name="floatingPassword"
+                       placeholder="Введите пароль">
+            </div>
+            <br>
+            <button class="button-enter-user submit-sample" style="margin-bottom:20px;" type="submit">Войти</button>
         </div>
-        <div class="login-form">
-            <input type="password" class="login-form-control" name="floatingPassword" id="floatingPassword" placeholder="Пароль">
-            <label for="floatingPassword">Пароль</label>
+        <br>
+        <div class="login-footer">
+            <div class="separator-with-shadow" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0;">
+                <div class="separator-with-shadow-box" style="margin-top: 0px;width: 100%"></div>
+            </div>
+            <p>Нет учётной записи? <a href="/signup">Зарегистрироваться</a></p>
         </div>
-        <div class="login-checkbox">
-            <label>
-                <input type="checkbox" value="rememberme" name="rememberme" id="rememberme">  Запомнить меня
-            </label>
-        </div>
-        <button class="w-100 btn btn-lg btn-warning" type="submit">Войти</button>
-        <hr>
-        <p>Ещё нет учётной записи? <a href="/signup">Регистрация</a></p>
-        <p class="mt-5 mb-3 text-muted">© 2022</p>
     </form>
 </main>
-
 
 {% endblock %}
