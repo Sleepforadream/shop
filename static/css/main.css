@@ -4,6 +4,42 @@ html {
   scroll-behavior: smooth;
 }
 
+input[type=date]{
+  color: #aaa9a9;
+}
+
+input[type=date]:valid {
+  color: #585858;
+}
+
+input[type=file]:before {
+    content: "Выбрать файл";
+    margin: 0 5px;
+    padding: 5px;
+    top: 0px;
+    display: inline-block;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    background-image: -webkit-linear-gradient(bottom, rgba(85,85,85,.1), rgba(255,255,255,.1));
+    background-image: -moz-linear-gradient(bottom, rgba(85,85,85,.1), rgba(255,255,255,.1));
+    background-image: -o-linear-gradient(bottom, rgba(85,85,85,.1), rgba(255,255,255,.1));
+    background-image: -ms-linear-gradient(bottom, rgba(85,85,85,.1), rgba(255,255,255,.1));
+    background-image: linear-gradient(to top, rgba(85,85,85,.1), rgba(255,255,255,.1));
+    box-shadow: inset 0 0 1px #fff;
+    text-shadow: 0 1px 0 #fffcf6;
+    border-radius: 3px;
+    cursor: pointer;
+    visibility:visible;
+    position: relative;
+}
+
+hr {
+    border: none;
+    color: #d2d2d2;
+    background-color: #d2d2d2;
+    height: 1px;
+   }
+
 ::-webkit-scrollbar {
     width: 9px;
 }
@@ -1799,6 +1835,22 @@ height: 43px;
 
 .button-enter-user:hover {
     background-color: rgba(66,126,209,0.9);
+}
+
+.button-enter-user.danger{
+    background-color: #d32e2e;
+}
+
+.button-enter-user.danger:hover {
+    background-color: rgba(211,46,46,0.9);
+}
+
+.button-enter-user.warning{
+    background-color: #d1a542;
+}
+
+.button-enter-user.warning:hover {
+    background-color: rgba(209,165,66,0.9);
 }
 
 .menu-login-box-register{
@@ -4829,8 +4881,244 @@ background-size: 101%!important;
     transition: all .5s ease;
 }
 
-.profile-main{
-    margin: 30px;
-    margin-bottom: 0px;
-    margin-top: 0px;
+.main-private-profile{
+    margin: auto;
+    /*margin: 30px;*/
+    margin-bottom: 30px;
+    /*margin-top: 0px;*/
+    display: flex;
+    max-width: var(--site_width);
+
+}
+
+.profile-menu{
+    width: 20%;
+    margin-right: 2%;
+}
+
+.profile-menu-item{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all .3s ease;
+    border-style: solid;
+    border-width: 0;
+    border-radius: 12.5px;
+    padding-left: 25px;
+    height: 48px;
+    text-decoration: none;
+    color: black;
+}
+
+.profile-menu-item:hover {
+    color: #d32e2e;
+    fill: #d32e2e;
+    background-color: #eaeaea;
+}
+
+.profile-menu-item.changed {
+    color: #d32e2e;
+    fill: #d32e2e;
+    background-color: #eaeaea;
+}
+
+
+.stroke-icon-profile-menu{
+     transition: all .3s ease;
+}
+
+.profile-menu-item:hover .stroke-icon-profile-menu{
+    stroke: #d32e2e!important;
+}
+
+.stroke-icon-profile-menu.changed{
+    stroke: #d32e2e!important;
+}
+
+.profile-info-box{
+    background-color: #f1f1f1;
+    border-style: solid;
+    border-width: 0;
+    border-radius: 12.5px;
+    padding: 20px;
+    width: 78%;
+}
+
+.user-img-profile{
+    border-radius: 50%;
+    margin-right: 3%;
+}
+
+.profile-title-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.profile-box{
+    margin-top: 20px;
+}
+
+.image-selector{
+
+}
+
+.feedback__text {
+    margin-bottom: 7px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #282828;
+}
+
+.feedback__label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 11px 0 0;
+    text-align: center;
+    background-color: #427ed1;
+    color: #fff;
+    cursor: pointer;
+    padding: 11px 23px;
+    line-height: 16px;
+    font-size: 13px;
+    border-radius: 10px;
+    font-family: var(--button_typography-font-family);
+    font-weight: var(--button_typography-font-weight);
+    font-style: var(--button_typography-font-style,normal);
+    letter-spacing: var(--button_typography-letter-spacing);
+    text-transform: var(--button_text_transform);
+    transition: all .2s;
+}
+
+.feedback__label:hover {
+    opacity: 0.9;
+}
+
+.feedback__label.cancel {
+    background-color: #d32e2e;
+}
+
+.feedback__file {
+    display: none;
+}
+
+.feedback__file.cancel{
+    display: none;
+}
+
+.input-form{
+    border: 1px solid #d2d2d2;
+    font-size: 13px;
+    padding: 8px 15px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    margin-top: 10px;
+    outline: 0;
+    height: 38px;
+    color: #585858;
+    transition: all .3s ease-in-out;
+}
+
+input:valid.input-form{
+  background: #fff;
+}
+
+.error-input-name{
+    color: red;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease-in-out;
+    display: none;
+}
+
+.error-input-secondName{
+    color: red;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease-in-out;
+    display: none;
+}
+
+.error-input-thirdName{
+    color: red;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease-in-out;
+    display: none;
+}
+
+.error-input-thirdName{
+    color: red;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease-in-out;
+    display: none;
+}
+
+.error-input-bornDate{
+    color: red;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease-in-out;
+    display: none;
+}
+
+.error-input-phoneNumber{
+    color: red;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease-in-out;
+    display: none;
+}
+
+.error-input-nickName{
+    color: red;
+    font-size: 12px;
+    pointer-events: none;
+    transition: all .3s ease-in-out;
+    display: none;
+}
+
+
+input:invalid{
+  background: bisque;
+}
+
+input#name:invalid + .error-input-name {
+    display: block;
+    opacity: 1;
+    pointer-events: all;
+}
+
+input#secondName:invalid + .error-input-secondName {
+    display: block;
+    opacity: 1;
+    pointer-events: all;
+}
+
+input#thirdName:invalid + .error-input-thirdName {
+    display: block;
+    opacity: 1;
+    pointer-events: all;
+}
+
+input#bornDate:invalid + .error-input-bornDate {
+    display: block;
+    opacity: 1;
+    pointer-events: all;
+}
+
+input#phoneNumber:invalid + .error-input-phoneNumber {
+    display: block;
+    opacity: 1;
+    pointer-events: all;
 }

@@ -14,7 +14,7 @@
     <div class="user-title">
         <hr>
         <br>
-        <h2><img class="user-img-profile" src='/{{ current_user.imgpath }}' alt="mdo" width="64" height="64">
+        <h2><img class="user-img-profile" src='/{{ current_user.imgPath }}' alt="mdo" width="64" height="64">
             Профиль пользователя "{{ current_user.name }}"
         </h2>
         <hr>
@@ -24,7 +24,7 @@
             <div class="select-headings">
                 <div class="image-upload-heading">
                     <div class="image-selector">
-                        <img class="user-img-profile" src='/{{ current_user.imgpath }}' alt="mdo" width="64"
+                        <img class="user-img-profile" src='/{{ current_user.imgPath }}' alt="mdo" width="64"
                              height="64">
                         <label class="label-upload-image" for="img">Изменить фотографию профиля:</label>
                         <input class="button-upload-image" type="file" name="img" id="img"
@@ -64,7 +64,7 @@
                 <a href="/create-article" class="btn btn-change">Новая статья</a>
             </a>
             <hr>
-            <p><b>Дата регистрации:</b> {{ current_user.date.date() }}</p>
+            <p><b>Дата регистрации:</b> {{ current_user.registerDate.date() }}</p>
             <hr>
             <br>
             <div class ="profile-submit-box">

@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret-key-goes-here'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shop.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
@@ -47,21 +47,28 @@ def load_user(user_id):
 
 class Authorization(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
+    registerDate = db.Column(db.DateTime, default=datetime.utcnow)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    name = db.Column(db.String(1000), unique=True, nullable=False)
+    nickName = db.Column(db.String(1000), unique=True, nullable=False)
+    name = db.Column(db.String(1000), unique=False, nullable=True)
+    secondName = db.Column(db.String(1000), unique=False, nullable=True)
+    thirdName = db.Column(db.String(1000), unique=False, nullable=True)
+    gender = db.Column(db.String(25), unique=False, nullable=True)
+    bornDate = db.Column(db.DateTime, unique=False, nullable=True)
+    phoneNumber = db.Column(db.Integer, unique=True, nullable=True)
+    address = db.Column(db.String(1000), nullable=True)
     info = db.Column(db.String(1000), nullable=True)
-    imgpath = db.Column(db.String(300), nullable=True)
+    imgPath = db.Column(db.String(300), nullable=True)
 
     def __repr__(self):
-        return "<{}:{}>".format(self.id, self.name)
+        return "<{}:{}>".format(self.id, self.nickName)
 
     def get_id(self):
         return Authorization.id
 
-    def get_name(self):
-        return Authorization.name
+    def get_nickName(self):
+        return Authorization.nickName
 
 
 @app.route('/')
@@ -103,11 +110,11 @@ def sample():
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
-    users = Authorization.query.order_by(Authorization.date.desc()).all()
+    users = Authorization.query.order_by(Authorization.registerDate.desc()).all()
     error = ""
     if request.method == "POST":
 
-        name = request.form['floatingName']
+        nickName = request.form['floatingName']
         email = request.form['floatingInput']
         password = request.form['floatingPassword']
         password_double = request.form['floatingPassword2']
@@ -115,11 +122,11 @@ def signup():
         pattern_password = re.compile(r'^(?=.*[0-9])(?=.*[!@#$%^&*_()=+?:;"`~/|,<>.-])(?=.*[a-z])(?=.*[A-Z])'
                                       r'[0-9a-zA-Z!@#$%^&*_()=+?:;"`~/|,<>.-]{8,}$')
 
-        if name == "" or email == "" or password == "":
+        if nickName == "" or email == "" or password == "":
             error = "Были заполнены не все обязательные поля"
             return render_template("signup.html", error=error)
 
-        if len(name) > 30 or len(email) > 256:
+        if len(nickName) > 30 or len(email) > 256:
             error = "Слишком большое колличство символов в строке"
             return render_template("signup.html", error=error)
         is_password = bool(pattern_password.match(password))
@@ -136,13 +143,13 @@ def signup():
             if user.email == email:
                 error = "Такая почта уже была зарегистрирована"
                 return render_template("signup.html", error=error)
-            if user.name == name:
+            if user.nickName == nickName:
                 error = "Пользователь с этим именем уже существует"
                 return render_template("signup.html", error=error)
 
         password = generate_password_hash(password)
 
-        authorization = Authorization(name=name, email=email, password=password)
+        authorization = Authorization(nickName=nickName, email=email, password=password)
 
         db.session.add(authorization)
         try:
@@ -163,7 +170,7 @@ def login_success():
 @app.route('/admin_panel')
 @login_required
 def admin_panel():
-    users = Authorization.query.order_by(Authorization.date.desc()).all()
+    users = Authorization.query.order_by(Authorization.registerDate.desc()).all()
     return render_template("admin_panel.html", users=users)
 
 
@@ -175,12 +182,12 @@ def login():
 
     class UserList(Authorization):
 
-        def __init__(self, id, date, email, password, name):
+        def __init__(self, id, registerDate, email, password, nickName):
             self.id = id
-            self.date = date
+            self.registerDate = registerDate
             self.email = email
             self.password = password
-            self.name = name
+            self.nickName = nickName
 
         def get_id(self):
             return self.id
@@ -195,7 +202,7 @@ def login():
         else:
             remember = False
 
-        users = Authorization.query.order_by(Authorization.date.desc()).all()
+        users = Authorization.query.order_by(Authorization.registerDate.desc()).all()
 
         if email == "" or password == "":
             error = "Были заполнены не все обязательные поля"
@@ -204,10 +211,10 @@ def login():
         for user in users:
             if user.email == email:
                 if check_password_hash(user.password, password):
-                    list_users = UserList(user.id, user.date, user.email, user.password, user.name)
+                    list_users = UserList(user.id, user.registerDate, user.email, user.password, user.nickName)
                     # user = db.session.query(Authorization).filter(Authorization.email == email).first()
                     login_user(list_users, remember=remember)
-                    return redirect(url_for('private_profile'))
+                    return redirect(url_for('private_profile_home'))
                 else:
                     error = "Пароль введён не верно"
                     return render_template("login.html", error=error)
@@ -223,92 +230,99 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/profile/<name>')
-def profile(name):
+@app.route('/profile/<nickName>')
+def profile(nickName):
     articles = Article.query.order_by(Article.date.desc()).all()
-    user = Authorization.query.filter(Authorization.name == name).first()
+    user = Authorization.query.filter(Authorization.nickName == nickName).first()
     return render_template("profile.html", user=user, articles=articles)
 
 
-@app.route('/private_profile')
-def private_profile():
+@app.route('/private_profile_home')
+def private_profile_home():
     articles = Article.query.order_by(Article.date.desc()).all()
-    return render_template("private_profile.html", articles=articles)
+    return render_template("private_profile_home.html", articles=articles)
 
 
-@app.route('/profile_settings/<name>', methods=['POST', 'GET'])
-def profile_settings(name):
-    Authorization.query.filter(Authorization.name == name).first()
-    error = ""
+@app.route('/private_profile_security')
+def private_profile_security():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("private_profile_security.html", articles=articles)
+
+
+@app.route('/private_profile_orders')
+def private_profile_orders():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("private_profile_orders.html", articles=articles)
+
+
+@app.route('/private_profile_cart')
+def private_profile_cart():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template("private_profile_cart.html", articles=articles)
+
+
+@app.route('/private_profile_info', methods=['POST', 'GET'])
+@login_required
+def private_profile_info():
     user = Authorization.query.get(current_user.id)
     if request.method == "POST":
         user.name = request.form['name']
-        user.email = request.form['email']
-        user.info = request.form['info']
-        password = request.form['password']
-        password2 = request.form['password2']
-
-        if len(user.name) >= 100 or len(user.email) >= 10000:
-            error = "Слишком большое колличство символов в строке"
-            return render_template("profile_settings.html", error=error)
-        if len(user.name) <= 0 or len(user.email) <= 0:
-            error = "Заполните поля: Имя и Email"
-            return render_template("profile_settings.html", error=error)
-        if password != "" or password2 != "":
-            if password != password2:
-                error = "Пароли должны совпадать"
-                return render_template("profile_settings.html", error=error)
-
-        if password != "":
-            pattern_password = re.compile(r'^(?=.*[0-9])(?=.*[!@#$%^&*_()=+?:;"`~/|,<>.-])(?=.*[a-z])(?=.*[A-Z])'
-                                          r'[0-9a-zA-Z!@#$%^&*_()=+?:;"`~/|,<>.-]{8,}$')
-            is_password = bool(pattern_password.match(password))
-            if not is_password:
-                error = "Слабый пароль. Пароль должен состоять по крайней мере из восьми символов, содержать символы в " \
-                        "верхнем и нижнем регистрах и включать по крайней мере одну цифру"
-                return render_template("profile_settings.html", error=error)
-
-            password = generate_password_hash(password)
-            user.password = password
-
+        user.secondName = request.form['secondName']
+        user.thirdName = request.form['thirdName']
+        user.gender = request.form.get('gender')
+        if request.form['bornDate'] != "":
+            user.bornDate = datetime.strptime(request.form['bornDate'],'%Y-%m-%d')
+        else:
+            user.bornDate = None
+        user.phoneNumber = request.form.get('phoneNumber')
+        user.address = request.form['address']
+        user.info = request.form.get('info')
         try:
             db.session.commit()
         except:
             return "При редактировании пользователя произошла ошибка"
         else:
-            img = request.files['img']
+            img = request.files['imgProfileAdd']
+            dirPathUserImg = 'static\\img\\users_photo\\' + str(user.id)
             if img.filename != "":
-                if not os.path.exists('static\\img\\users_photo\\' + str(user.id)):
-                    os.mkdir('static\\img\\users_photo\\' + str(user.id))
-                imgpath = 'static\\img\\users_photo\\' + str(user.id) + '\\' + img.filename
-                img.save(imgpath)
-                user.imgpath = imgpath
+                if not os.path.exists(dirPathUserImg):
+                    os.mkdir(dirPathUserImg)
+                else:
+                    for f in os.listdir(dirPathUserImg):
+                        os.remove(os.path.join(dirPathUserImg, f))
+                filePathUserImg = dirPathUserImg + '\\' + img.filename
+                img.save(filePathUserImg)
+                user.imgPath = filePathUserImg
                 db.session.commit()
-                return redirect('/private_profile')
-
-            return redirect('/private_profile')
+                return redirect('/private_profile_info')
+            else:
+                for f in os.listdir(dirPathUserImg):
+                    os.remove(os.path.join(dirPathUserImg, f))
+                user.imgPath = None
+                db.session.commit()
+                return redirect('/private_profile_info')
     else:
-        return render_template("profile_settings.html", error=error)
+        return render_template("private_profile_info.html")
 
 
-@app.route('/profile_settings/<name>/delete')
-def user_delete(name):
+@app.route('/profile_settings/<nickName>/delete')
+def user_delete(nickName):
     articles = Article.query.order_by(Article.date.desc()).all()
-    user = Authorization.query.filter(Authorization.name == name).first()
+    user = Authorization.query.filter(Authorization.nickName == nickName).first()
 
-    separatepath = str(user.imgpath).split("\\")
-    separatepath.pop(len(separatepath) - 1)
-    pathtopackgage = ""
-    for path in separatepath:
-        if separatepath.index(path) != len(separatepath) - 1:
-            pathtopackgage = pathtopackgage + path + "//"
+    separatePath = str(user.imgPath).split("\\")
+    separatePath.pop(len(separatePath) - 1)
+    pathToPackage = ""
+    for path in separatePath:
+        if separatePath.index(path) != len(separatePath) - 1:
+            pathToPackage = pathToPackage + path + "//"
         else:
-            pathtopackgage = pathtopackgage + path
-    if user.imgpath is None:
+            pathToPackage = pathToPackage + path
+    if user.imgPath is None:
         db.session.delete(user)
         db.session.commit()
     else:
-        shutil.rmtree(pathtopackgage)
+        shutil.rmtree(pathToPackage)
         db.session.delete(user)
         db.session.commit()
     logout_user()
@@ -479,14 +493,14 @@ def post_update(id):
 
         if img.filename != "":
             if os.path.exists('static\\img\\articles\\' + str(article.id)):
-                imgpath = 'static\\img\\articles\\' + str(article.id) + '\\' + img.filename
-                img.save(imgpath)
-                article.imgpath = imgpath
+                imgPath = 'static\\img\\articles\\' + str(article.id) + '\\' + img.filename
+                img.save(imgPath)
+                article.imgpath = imgPath
             else:
                 os.mkdir('static\\img\\articles\\' + str(article.id))
-                imgpath = 'static\\img\\articles\\' + str(article.id) + '\\' + img.filename
-                img.save(imgpath)
-                article.imgpath = imgpath
+                imgPath = 'static\\img\\articles\\' + str(article.id) + '\\' + img.filename
+                img.save(imgPath)
+                article.imgpath = imgPath
         try:
             db.session.commit()
             return redirect('/posts')
@@ -505,7 +519,7 @@ def create_article():
         intro = request.form['intro']
         text = request.form['text']
         heading = request.form.get('heading')
-        author = current_user.name
+        author = current_user.nickName
         private = request.form['checkbox']
 
         if title == "" or intro == "" or text == "":
@@ -524,10 +538,10 @@ def create_article():
             img = request.files['img']
             if img.filename != "":
                 os.mkdir('static\\img\\articles\\' + str(article.id))
-                imgpath = 'static\\img\\articles\\' + str(article.id) + '\\' + img.filename
-                img.save(imgpath)
+                imgPath = 'static\\img\\articles\\' + str(article.id) + '\\' + img.filename
+                img.save(imgPath)
 
-                article.imgpath = imgpath
+                article.imgpath = imgPath
                 db.session.commit()
 
                 return redirect('/posts')

@@ -75,7 +75,7 @@
                     <div class="popup__bg" id="popupDivAuth" data-some-data-attr="mydata">
                         <div class="user-popup" style="padding: 0px;width: 150px;">
                             <ul class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ url_for('private_profile') }}">
+                                <a class="dropdown-item" href="private_profile_home">
                                     <svg class="icon-profile-menu" viewBox="0 0 24 24">
                                         <g id="style=stroke">
                                             <g id="profile">
@@ -86,14 +86,14 @@
                                             </g>
                                         </g>
                                     </svg>
-                                    <p class="dropdown-text" href="/private_profile">Профиль</p>
+                                    <p class="dropdown-text">Профиль</p>
                                 </a>
                                 <a class="dropdown-item" href="">
                                     <svg class="icon-profile-menu" viewBox="0 0 1024 1024">
                                         <path d="M800.8 952c-31.2 0-56-24.8-56-56s24.8-56 56-56 56 24.8 56 56-25.6 56-56 56z m-448 0c-31.2 0-56-24.8-56-56s24.8-56 56-56 56 24.8 56 56-25.6 56-56 56zM344 792c-42.4 0-79.2-33.6-84-76l-54.4-382.4-31.2-178.4c-2.4-19.2-19.2-35.2-37.6-35.2H96c-13.6 0-24-10.4-24-24s10.4-24 24-24h40.8c42.4 0 80 33.6 85.6 76l31.2 178.4 54.4 383.2C309.6 728 326.4 744 344 744h520c13.6 0 24 10.4 24 24s-10.4 24-24 24H344z m40-128c-12.8 0-23.2-9.6-24-22.4-0.8-6.4 1.6-12.8 5.6-17.6s10.4-8 16-8l434.4-32c19.2 0 36-15.2 38.4-33.6l50.4-288c1.6-13.6-2.4-28-10.4-36.8-5.6-6.4-12.8-9.6-21.6-9.6H320c-13.6 0-24-10.4-24-24s10.4-24 24-24h554.4c22.4 0 42.4 9.6 57.6 25.6 16.8 19.2 24.8 47.2 21.6 75.2l-50.4 288c-4.8 41.6-42.4 74.4-84 74.4l-432 32c-1.6 0.8-2.4 0.8-3.2 0.8z"
                                               fill=""/>
                                     </svg>
-                                    <p class="dropdown-text" href="/create-article">Корзина</p>
+                                    <p class="dropdown-text">Корзина</p>
                                 </a>
                                 <a class="dropdown-item" href="">
                                     <svg class="icon-profile-menu" viewBox="0 0 1024 1024">
@@ -103,7 +103,7 @@
                                         <path d="M747.2 297.6H276.8V144c0-32.8 26.4-59.2 59.2-59.2h60.8c21.6-43.2 66.4-71.2 116-71.2 49.6 0 94.4 28 116 71.2h60.8c32.8 0 59.2 26.4 59.2 59.2l-1.6 153.6z m-423.2-47.2h376.8V144c0-6.4-5.6-12-12-12H595.2l-5.6-16c-11.2-32.8-42.4-55.2-77.6-55.2-35.2 0-66.4 22.4-77.6 55.2l-5.6 16H335.2c-6.4 0-12 5.6-12 12v106.4z"
                                               fill=""/>
                                     </svg>
-                                    <p class="dropdown-text" href="/create-article">Заказы</p>
+                                    <p class="dropdown-text">Заказы</p>
                                 </a>
                                 <hr class="dropdown-divider">
                                 <a class="dropdown-item" href="{{ url_for('logout') }}">
@@ -115,7 +115,7 @@
                                             <path d="m10.5.5-8 .00224609c-1.1043501.00087167-1.9994384.89621131-2 2.00056153v9.99438478c0 1.1045695.8954305 2 2 2h8.0954792"/>
                                         </g>
                                     </svg>
-                                    <p class="dropdown-text" href="{{ url_for('logout') }}">Выйти</p>
+                                    <p class="dropdown-text">Выйти</p>
                                 </a>
                             </ul>
                         </div>
@@ -146,17 +146,7 @@
                         <div class="menu-user-panel">
                             <span class="menu-text">Моя учётная запись</span>
                             <div class="mini-profile-image">
-                                <img class="profile-image" src='/{{ current_user.imgpath }}' alt="mdo" width="28"
-                                     height="28">
-                            </div>
-                            <div class="indicator-dropdown"></div>
-                        </div>
-                    </a>
-                    {% else %}
-                    <a class="text-href" href="/login" style="text-decoration: none;">
-                        <div class="menu-user-panel">
-                            <span class="menu-text">Моя учётная запись</span>
-                            <div class="mini-profile-image">
+                                {% if current_user.imgPath == None %}
                                 <svg class="profile-image" height="16px" width="16px" viewBox="0 0 512 512">
                                     <g>
                                         <path class="st0" d="M458.159,404.216c-18.93-33.65-49.934-71.764-100.409-93.431c-28.868,20.196-63.938,32.087-101.745,32.087
@@ -166,7 +156,18 @@
                                     c-74.155,0-134.252,60.108-134.252,134.242V166.4C121.753,240.533,181.851,300.641,256.005,300.641z"/>
                                     </g>
                                 </svg>
+                                {% else %}
+                                <img class="profile-image" src='/{{ current_user.imgPath }}' alt="mdo" width="28"
+                                     height="28">
+                                {% endif %}
                             </div>
+                            <div class="indicator-dropdown"></div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <a class="text-href" href="/login" style="text-decoration: none;">
+                        <div class="menu-user-panel">
+                            <span class="menu-text">Моя учётная запись</span>
                             <div class="indicator-dropdown"></div>
                         </div>
                     </a>

@@ -23,7 +23,7 @@
             <div class="separator-with-shadow-box" style="margin-top: 0px;"></div>
         </div>
         <br>
-        <h2><img class="user-img-profile" src='/{{ user.imgpath }}' alt="mdo" width="64" height="64">
+        <h2><img class="user-img-profile" src='/{{ user.imgPath }}' alt="mdo" width="64" height="64">
             Профиль пользователя "{{ user.name }}"
         </h2>
         <hr>
@@ -33,7 +33,7 @@
         <hr>
         <p><b>Email:</b> {{ user.email }}</p>
         <hr>
-        <p><b>Дата регистрации:</b> {{ user.date.date() }}</p>
+        <p><b>Дата регистрации:</b> {{ user.registerDate.date() }}</p>
         <hr>
         <p><b>Обо мне:</b> {{ user.info }}</p>
         <hr>

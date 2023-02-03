@@ -10,52 +10,50 @@
 <div class="separator-with-shadow" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0;">
     <div class="separator-with-shadow-box" style="margin-top: 0px;"></div>
 </div>
-    {% if error != "" %}
-    <div class="error-register-block">
-        <p class="error-register">{{ error }}</p>
-    </div>
-    {% else %}
-    <div class="error-register-block" style="display:none;">
-        <p class="error-register">{{ error }}</p>
-    </div>
-    {% endif %}
+{% if error != "" %}
+<div class="error-register-block">
+    <p class="error-register">{{ error }}</p>
+</div>
+{% else %}
+<div class="error-register-block" style="display:none;">
+    <p class="error-register">{{ error }}</p>
+</div>
+{% endif %}
 
 <main class="signup-form">
 
     <form method="post" class="main-form" enctype="multipart/form-data">
-         <div>
         <div class="separator-with-shadow" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0;">
             <div class="separator-with-shadow-box" style="margin-top: 0px;"></div>
         </div>
 
-            <h1 class="login-title">Введите данные для регистрации</h1>
-            <div class="separator-with-shadow" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0;">
-                <div class="separator-with-shadow-box" style="margin-top: 0px;"></div>
-            </div>
-            <div class="login-form" style="margin-bottom:20px;margin-top: 20px;">
-                <div class="form-control-title">Имя*</div>
-                <input type="text" class="form-control" id="floatingName" name="floatingName"
-                       placeholder="Введите Ваше имя">
-            </div>
-            <div class="login-form" style="margin-bottom:20px;">
-                <div class="form-control-title">Электронная почта*</div>
-                <input type="email" class="form-control" id="floatingInput" name="floatingInput"
-                       placeholder="Имя@пример.com">
-            </div>
-            <div class="login-form" style="margin-bottom:20px;">
-                <div class="form-control-title">Пароль*</div>
-                <input type="password" class="form-control" id="floatingPassword" name="floatingPassword"
-                       placeholder="Придумайте пароль">
-            </div>
-            <div class="login-form" style="margin-bottom:20px;">
-                <div class="form-control-title">Повторите пароль*</div>
-                <input type="password" class="form-control" id="floatingPassword2" name="floatingPassword2"
-                       placeholder="Повторите Ваш пароль">
-            </div>
-             <br>
-            <button class="button-enter-user submit-sample" style="margin-bottom:20px;" type="submit">Зарегистрироваться
-            </button>
+        <h1 class="login-title">Введите данные для регистрации</h1>
+        <div class="separator-with-shadow" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0;">
+            <div class="separator-with-shadow-box" style="margin-top: 0px;"></div>
         </div>
+        <div class="login-form" style="margin-bottom:20px;margin-top: 20px;">
+            <div class="form-control-title">Имя*</div>
+            <input type="text" class="form-control" id="floatingName" name="floatingName"
+                   placeholder="Введите Ваше имя">
+        </div>
+        <div class="login-form" style="margin-bottom:20px;">
+            <div class="form-control-title">Электронная почта*</div>
+            <input type="email" class="form-control" id="floatingInput" name="floatingInput"
+                   placeholder="Имя@пример.com">
+        </div>
+        <div class="login-form" style="margin-bottom:20px;">
+            <div class="form-control-title">Пароль*</div>
+            <input type="password" class="form-control" id="floatingPassword" name="floatingPassword"
+                   placeholder="Придумайте пароль">
+        </div>
+        <div class="login-form" style="margin-bottom:20px;">
+            <div class="form-control-title">Повторите пароль*</div>
+            <input type="password" class="form-control" id="floatingPassword2" name="floatingPassword2"
+                   placeholder="Повторите Ваш пароль">
+        </div>
+        <br>
+        <button class="button-enter-user submit-sample" style="margin-bottom:20px;" type="submit">Зарегистрироваться
+        </button>
         <div class="login-footer">
             <br>
             <div class="separator-with-shadow" style="padding-top: 0px;padding-bottom: 0px;margin-top: 0;">
