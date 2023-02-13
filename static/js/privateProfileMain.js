@@ -11,9 +11,13 @@
 
     profileBox.style.height = heightProfileBox + 'px'; // Применение позиционирования слайдера по вертикал
 
-    let coordsProfileInfoBox = mainForm.getBoundingClientRect();
-    let coordsProfileBox = registerForm.getBoundingClientRect();
+    let coordsProfileInfoBox = profileInfoBox.getBoundingClientRect();
+    let coordsProfileBox = profileBox.getBoundingClientRect();
 
-        if(coordsMainForm.bottom > coordsRegisterForm.bottom || coordsMainForm.top < coordsRegisterForm.top){
+    if(coordsProfileInfoBox.bottom > coordsProfileBox.bottom || coordsProfileInfoBox.top < coordsProfileBox.top){
 
-    let coordsRegisterForm = profileBox.getBoundingClientRect();
+    profileBox.style.height = 450 + 'px';
+
+    //let coordsRegisterForm = profileBox.getBoundingClientRect();
+
+    }

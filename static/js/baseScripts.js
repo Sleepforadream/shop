@@ -155,18 +155,20 @@ window.onload = function () {
 //начало hamburgerBlock
 
     let popupMobileMenu = document.querySelector('.mobile-menu-box'); // Само окно
-    let openMobileMenuButton = document.querySelector('.hamburger-menu'); // Кнопка для показа окна
+    let openMobileMenuButton = document.querySelectorAll('.hamburger-menu'); // Кнопка для показа окна
 
     let mobileMenuCategories = document.querySelector('.mobile-sub-menu'); // Расширенное меню категорий
-    let openMobileSubMenuButton = document.querySelector('.indicator-dropdown-medium'); // Кнопка для показа категорий
+    let openMobileSubMenuButton = document.querySelector('.mobile-menu-categories'); // Кнопка для показа категорий
 
     const toggleMobileMenu = () => {
         popupMobileMenu.classList.toggle('active');
     }
 
-    openMobileMenuButton.addEventListener('click', e => {
-        e.stopPropagation();
-        toggleMobileMenu();
+    openMobileMenuButton.forEach((button) => {
+        button.addEventListener('click', e => {
+            e.stopPropagation();
+            toggleMobileMenu();
+        });
     });
 
     const toggleMobileSubMenu = () => {
@@ -256,8 +258,7 @@ window.onload = function () {
 
     let popupSearchSticky = document.querySelector('.menu-search-sticky'); // Само окно
     let openSearchPopupButtonSticky = document.querySelector('.search-icon-box-sticky'); // Кнопка для показа окна
-    document.querySelector('.header-sticky-menu');
-//Хэдер
+    document.querySelector('.header-sticky-menu'); //Хэдер
     let InputSearchSticky = document.querySelector('.input-search-sticky'); //Поле ввода для поиска
 
     let coordsSearchPopupButtonSticky = openSearchPopupButtonSticky.getBoundingClientRect(); //Координаты кнопки показа окна

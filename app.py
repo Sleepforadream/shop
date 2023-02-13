@@ -33,7 +33,7 @@ class Article(db.Model):
     heading = db.Column(db.String(100), nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     imgpath = db.Column(db.String(300), nullable=True)
-    author = db.Column(db.String(300),  nullable=False)
+    author = db.Column(db.String(300), nullable=False)
     private = db.Column(db.String(100))
 
     def __repr__(self):
@@ -50,6 +50,7 @@ class Authorization(db.Model, UserMixin):
     registerDate = db.Column(db.DateTime, default=datetime.utcnow)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    hidePassword = db.Column(db.String(100), nullable=False)
     nickName = db.Column(db.String(1000), unique=True, nullable=False)
     name = db.Column(db.String(1000), unique=False, nullable=True)
     secondName = db.Column(db.String(1000), unique=False, nullable=True)
@@ -82,13 +83,13 @@ def index():
         article1 = articles_list[len(articles_list) - 1]
         article2 = articles_list[len(articles_list) - 2]
 
-        uniquedates = set()
+        uniqueDates = set()
         for article in articles:
             date = article.date.strftime("%Y %B")
-            uniquedates.add(date)
-        monthsyears = sorted(uniquedates)
+            uniqueDates.add(date)
+        monthsYears = sorted(uniqueDates)
         return render_template("index.html", articles=articles, article1=article1, article2=article2,
-                               monthsyears=monthsyears)
+                               monthsyears=monthsYears)
     else:
         return render_template("index.html")
 
@@ -147,9 +148,14 @@ def signup():
                 error = "Пользователь с этим именем уже существует"
                 return render_template("signup.html", error=error)
 
+        passwordLength = len(password)
+        hidePassword = ""
+        for i in range(passwordLength):
+            hidePassword = hidePassword + "*"
+
         password = generate_password_hash(password)
 
-        authorization = Authorization(nickName=nickName, email=email, password=password)
+        authorization = Authorization(nickName=nickName, email=email, password=password, hidePassword=hidePassword)
 
         db.session.add(authorization)
         try:
@@ -172,6 +178,54 @@ def login_success():
 def admin_panel():
     users = Authorization.query.order_by(Authorization.registerDate.desc()).all()
     return render_template("admin_panel.html", users=users)
+
+
+@app.route('/<current_template>', methods=['POST', 'GET'])
+def allLogin(current_template):
+
+    error = ""
+
+    class UserList(Authorization):
+
+        def __init__(self, id, registerDate, email, password, nickName):
+            self.id = id
+            self.registerDate = registerDate
+            self.email = email
+            self.password = password
+            self.nickName = nickName
+
+        def get_id(self):
+            return self.id
+
+    if request.method == "POST":
+        email = request.form['username']
+        password = request.form['password']
+        remember = request.form.get('menu-login-box-rememberme')
+
+        if remember is not None:
+            remember = True
+        else:
+            remember = False
+
+        users = Authorization.query.order_by(Authorization.registerDate.desc()).all()
+
+        if email == "" or password == "":
+            error = "Были заполнены не все обязательные поля"
+            return render_template("login.html", error=error)
+
+        for user in users:
+            if user.email == email:
+                if check_password_hash(user.password, password):
+                    list_users = UserList(user.id, user.registerDate, user.email, user.password, user.nickName)
+                    # user = db.session.query(Authorization).filter(Authorization.email == email).first()
+                    login_user(list_users, remember=remember)
+                    return redirect(url_for('private_profile_home'))
+                else:
+                    error = "Пароль введён не верно"
+                    return render_template("login.html", error=error)
+        error = "Такой электронной почты не было зарегистрировано"
+        return render_template("login.html", error=error)
+    return render_template("login.html", error=error)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -243,10 +297,39 @@ def private_profile_home():
     return render_template("private_profile_home.html", articles=articles)
 
 
-@app.route('/private_profile_security')
+@app.route('/private_profile_security', methods=['POST', 'GET'])
+@login_required
 def private_profile_security():
-    articles = Article.query.order_by(Article.date.desc()).all()
-    return render_template("private_profile_security.html", articles=articles)
+    user = Authorization.query.get(current_user.id)
+    if request.method == "POST":
+        user.phoneNumber = request.form.get('phoneNumber')
+        user.password = request.form.get('phoneNumber')
+        try:
+            db.session.commit()
+        except:
+            return "При редактировании пользователя произошла ошибка"
+        else:
+            img = request.files['imgProfileAdd']
+            dirPathUserImg = 'static\\img\\users_photo\\' + str(user.id)
+            if img.filename != "":
+                if not os.path.exists(dirPathUserImg):
+                    os.mkdir(dirPathUserImg)
+                else:
+                    for f in os.listdir(dirPathUserImg):
+                        os.remove(os.path.join(dirPathUserImg, f))
+                filePathUserImg = dirPathUserImg + '\\' + img.filename
+                img.save(filePathUserImg)
+                user.imgPath = filePathUserImg
+                db.session.commit()
+                return redirect('/private_profile_security')
+            else:
+                for f in os.listdir(dirPathUserImg):
+                    os.remove(os.path.join(dirPathUserImg, f))
+                user.imgPath = None
+                db.session.commit()
+                return redirect('/private_profile_security')
+    else:
+        return render_template("private_profile_security.html")
 
 
 @app.route('/private_profile_orders')
@@ -271,7 +354,7 @@ def private_profile_info():
         user.thirdName = request.form['thirdName']
         user.gender = request.form.get('gender')
         if request.form['bornDate'] != "":
-            user.bornDate = datetime.strptime(request.form['bornDate'],'%Y-%m-%d')
+            user.bornDate = datetime.strptime(request.form['bornDate'], '%Y-%m-%d')
         else:
             user.bornDate = None
         user.phoneNumber = request.form.get('phoneNumber')
@@ -459,19 +542,19 @@ def post_detail(id):
 def post_delete(id):
     article = Article.query.get_or_404(id)
 
-    separatepath = str(article.imgpath).split("\\")
-    separatepath.pop(len(separatepath) - 1)
-    pathtopackgage = ""
-    for path in separatepath:
-        if separatepath.index(path) != len(separatepath) - 1:
-            pathtopackgage = pathtopackgage + path + "//"
+    separatePath = str(article.imgpath).split("\\")
+    separatePath.pop(len(separatePath) - 1)
+    pathToPackage = ""
+    for path in separatePath:
+        if separatePath.index(path) != len(separatePath) - 1:
+            pathToPackage = pathToPackage + path + "//"
         else:
-            pathtopackgage = pathtopackgage + path
+            pathToPackage = pathToPackage + path
     if article.imgpath is None:
         db.session.delete(article)
         db.session.commit()
     else:
-        shutil.rmtree(pathtopackgage)
+        shutil.rmtree(pathToPackage)
         db.session.delete(article)
         db.session.commit()
     return redirect('/posts')

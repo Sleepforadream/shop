@@ -78,24 +78,18 @@
             <p><b>Дата рождения:</b>{% if current_user.bornDate == None %}
                 <input type="date" placeholder="дд.мм.гггг" style="color: #aaa9a9"
                                            onchange="(this.style.color = '#585858')"
-                                           name="bornDate" id="bornDate" class="input-form"
+                                           name="bornDate" id="bornDate1" class="input-form"
                                            value="{% if current_user.bornDate == None %}{% else %}{{ current_user.bornDate.date() }}{% endif %}"
                                            min="1923-01-01" max="2007-01-01">
                 <span class="error-input-bornDate" style="margin-left: 15px;margin-top: 10px;margin-bottom: -5px;">Заполните все поля. Вы должны быть старше 16 и младше 100 лет</span></p>
                 {% else %}
                 <input type="date" placeholder="дд.мм.гггг"
                                            onreset="(this.style.color = '#aaa9a9')"
-                                           name="bornDate" id="bornDate" class="input-form"
+                                           name="bornDate" id="bornDate2" class="input-form"
                                            value="{% if current_user.bornDate == None %}{% else %}{{ current_user.bornDate.date() }}{% endif %}"
                                            min="1923-01-01" max="2007-01-01">
                 <span class="error-input-bornDate" style="margin-left: 15px;margin-top: 10px;margin-bottom: -5px;">Заполните все поля. Вы должны быть старше 16 и младше 100 лет</span></p>
                 {% endif %}
-            <hr>
-            <p><b>Телефон:</b><input type="tel" name="phoneNumber" id="phoneNumber" class="input-form"
-                                     pattern="[8]{1}[0-9]{10}" maxlength="11"
-                                     value="{% if current_user.phoneNumber == None %}{% else %}{{ current_user.phoneNumber }}{% endif %}"
-                                     placeholder="Введите свой телефон (Пример: 89871234567)">
-                <span class="error-input-phoneNumber" style="margin-left: 15px;margin-top: 10px;margin-bottom: -5px;">Некорректный мобильный телефон. Должно быть 11 цифр</span></p>
             <hr>
             <p><b>Адрес доставки:</b><input type="text" name="address" id="address" class="input-form"
                                             value="{% if current_user.address == None %}{% else %}{{ current_user.address }}{% endif %}"
@@ -104,10 +98,6 @@
             <p><b>Обо мне:</b><textarea style="width:100%; height:10em;font-family: sans-serif;" name="info"
                                         id="info" class="input-form"
                                         placeholder="Напишите что-нибудь о себе">{% if current_user.info == None %}{% else %}{{ current_user.info }}{% endif %}</textarea>
-            </p>
-            <hr>
-            <p><a href="/profile_settings/{{ current_user.name }}/delete" class="button-enter-user danger">Удалить этот
-                аккаунт</a>
             </p>
             <hr>
             <p class="profile-submit-box" style="display:flex;justify-content: space-between;margin-bottom:0;">

@@ -122,15 +122,15 @@
                     </div>
                     {% else %}
                     <div class="popup__bg" id="popupDivNonAuth" data-some-data-attr="mydata">
-                        <form class="user-popup">
-                            <p><input type="text" class="input-login-user-popup" name="log" id="username" value=""
-                                      placeholder="Имя пользователя"></p>
-                            <p><input type="password" class="input-password-user-popup" name="pwd" id="password"
+                        <form class="user-popup" method="post" enctype="multipart/form-data">
+                            <p><input type="email" class="input-login-user-popup" name="username" id="username" value=""
+                                      placeholder="Ваш email"></p>
+                            <p><input type="password" class="input-password-user-popup" name="password" id="password"
                                       value=""
                                       placeholder="Пароль"></p>
                             <p class="remember-checkbox">
                                 <label for="menu-login-box-rememberme">
-                                    <input name="rememberme" type="checkbox" id="menu-login-box-rememberme"
+                                    <input name="menu-login-box-rememberme" type="checkbox" id="menu-login-box-rememberme"
                                            value="forever">
                                     Запомнить меня</label></p>
                             <input type="hidden" name="login_box" value="true">
@@ -142,7 +142,7 @@
                     </div>
                     {% endif %}
                     {% if current_user.is_authenticated %}
-                    <a href="/profile" style="text-decoration: none;">
+                    <a href="/private_profile_home" style="text-decoration: none;">
                         <div class="menu-user-panel">
                             <span class="menu-text">Моя учётная запись</span>
                             <div class="mini-profile-image">
@@ -530,7 +530,7 @@
         <div class="footer-column1">
             <section id="text-6" class="footer-text">
                 <div style="margin-bottom: 50px;" class="textwidget"><p><img
-                        src="http://doors-kd.ru/wp-content/uploads/2019/11/Краснодеревщик6-1.png" alt="logo_footer"
+                        src="../static/img/content/Краснодеревщик6-1.png" alt="logo_footer"
                         width="160" height="86" class=""></p>
                 </div>
                 <div style="clear:both;"></div>
