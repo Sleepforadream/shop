@@ -1,6 +1,9 @@
 let userImgProfile = document.querySelector('.user-img-profile');
 let feedbackFile = document.getElementById("imgProfileAdd");
 let feedbackLabelCancel = document.querySelector('.feedback__label.cancel');
+let secondMenu = document.querySelector('.second-header-menu');
+
+secondMenu.style.display = "none";
 
 imgProfileAdd.onchange = evt => {
   const [file] = imgProfileAdd.files

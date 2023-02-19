@@ -1,6 +1,7 @@
 import os
 import re
 import shutil
+import sqlite3
 
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -182,7 +183,6 @@ def admin_panel():
 
 @app.route('/<current_template>', methods=['POST', 'GET'])
 def allLogin(current_template):
-
     error = ""
 
     class UserList(Authorization):
@@ -198,8 +198,8 @@ def allLogin(current_template):
             return self.id
 
     if request.method == "POST":
-        email = request.form['username']
-        password = request.form['password']
+        email = request.form['username_popup']
+        password = request.form['password_popup']
         remember = request.form.get('menu-login-box-rememberme')
 
         if remember is not None:
@@ -210,14 +210,12 @@ def allLogin(current_template):
         users = Authorization.query.order_by(Authorization.registerDate.desc()).all()
 
         if email == "" or password == "":
-            error = "Были заполнены не все обязательные поля"
-            return render_template("login.html", error=error)
+            return redirect(url_for('login', error=error))
 
         for user in users:
             if user.email == email:
                 if check_password_hash(user.password, password):
                     list_users = UserList(user.id, user.registerDate, user.email, user.password, user.nickName)
-                    # user = db.session.query(Authorization).filter(Authorization.email == email).first()
                     login_user(list_users, remember=remember)
                     return redirect(url_for('private_profile_home'))
                 else:
@@ -228,11 +226,12 @@ def allLogin(current_template):
     return render_template("login.html", error=error)
 
 
+@app.route('/', methods=['POST', 'GET'])
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     error = ""
     if current_user.is_authenticated:
-        return redirect(url_for('admin_panel'))
+        return redirect(url_for('private_profile_home'))
 
     class UserList(Authorization):
 
@@ -247,9 +246,25 @@ def login():
             return self.id
 
     if request.method == "POST":
-        email = request.form['floatingInput']
-        password = request.form['floatingPassword']
-        remember = request.form.get('rememberme')
+        try:
+            email = request.form['floatingInput']
+        except:
+            email = request.form['username_popup']
+            if email == "":
+                error = ""
+                return render_template("login.html", error=error)
+
+        try:
+            password = request.form['floatingPassword']
+        except:
+            password = request.form['password_popup']
+            if password == "":
+                error = ""
+                return render_template("login.html", error=error)
+        try:
+            remember = request.form.get('rememberme')
+        except:
+            remember = request.form.get('menu-login-box-rememberme')
 
         if remember is not None:
             remember = True
@@ -266,7 +281,6 @@ def login():
             if user.email == email:
                 if check_password_hash(user.password, password):
                     list_users = UserList(user.id, user.registerDate, user.email, user.password, user.nickName)
-                    # user = db.session.query(Authorization).filter(Authorization.email == email).first()
                     login_user(list_users, remember=remember)
                     return redirect(url_for('private_profile_home'))
                 else:
@@ -301,35 +315,106 @@ def private_profile_home():
 @login_required
 def private_profile_security():
     user = Authorization.query.get(current_user.id)
+    error = ""
     if request.method == "POST":
-        user.phoneNumber = request.form.get('phoneNumber')
-        user.password = request.form.get('phoneNumber')
-        try:
+        email = request.form['email']
+        phoneNumber = request.form['phoneNumber']
+        confirmDelete = request.form['confirmDelete']
+        oldPassword = request.form['oldPassword']
+        newPassword = request.form['newPassword']
+        repeatNewPassword = request.form['repeatNewPassword']
+
+        pattern_password = re.compile(r'^(?=.*[0-9])(?=.*[!@#$%^&*_()=+?:;"`~/|,<>.-])(?=.*[a-z])(?=.*[A-Z])'
+                                      r'[0-9a-zA-Z!@#$%^&*_()=+?:;"`~/|,<>.-]{8,}$')
+        pattern_phone = re.compile(r'^\+?[78]\s?(\d{3})\s?\)?\-?(\d{3})\-?(\d{2})\-?(\d{2})$')
+        pattern_email = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')
+
+        if check_password_hash(user.password, confirmDelete):
+            db.session.delete(user)
             db.session.commit()
-        except:
-            return "При редактировании пользователя произошла ошибка"
+            render_template("base.html")
+            render_template("login.html", error=error)
+            return redirect('/login')
+        elif confirmDelete != "" and not check_password_hash(user.password, confirmDelete):
+            error = "Пароль введён неверно"
+            return render_template("private_profile_security.html", error=error)
         else:
-            img = request.files['imgProfileAdd']
-            dirPathUserImg = 'static\\img\\users_photo\\' + str(user.id)
-            if img.filename != "":
-                if not os.path.exists(dirPathUserImg):
-                    os.mkdir(dirPathUserImg)
+            is_email = bool(pattern_email.match(email))
+            if len(email) < 256 and email != "":
+                if is_email:
+                    user.email = email
                 else:
-                    for f in os.listdir(dirPathUserImg):
-                        os.remove(os.path.join(dirPathUserImg, f))
-                filePathUserImg = dirPathUserImg + '\\' + img.filename
-                img.save(filePathUserImg)
-                user.imgPath = filePathUserImg
-                db.session.commit()
-                return redirect('/private_profile_security')
+                    error = "Email введён некорректно"
+                    return render_template("private_profile_security.html", error=error)
             else:
-                for f in os.listdir(dirPathUserImg):
-                    os.remove(os.path.join(dirPathUserImg, f))
-                user.imgPath = None
+                error = "Неверное колличство символов Email"
+                return render_template("private_profile_security.html", error=error)
+
+            is_phoneNumber = bool(pattern_phone.match(phoneNumber))
+            if phoneNumber == "" or is_phoneNumber:
+                user.phoneNumber = phoneNumber
+            else:
+                error = "Неверный формат телефона"
+                return render_template("private_profile_security.html", error=error)
+
+            if oldPassword == "" and newPassword == "" and repeatNewPassword == "":
+                user.password = user.password
+            elif check_password_hash(user.password, oldPassword):
+                is_password = bool(pattern_password.match(newPassword))
+                if is_password:
+                    if newPassword == repeatNewPassword:
+                        passwordLength = len(newPassword)
+                        hidePassword = ""
+                        for i in range(passwordLength):
+                            hidePassword = hidePassword + "*"
+                        password = generate_password_hash(newPassword)
+                        user.password = password
+                    else:
+                        error = "Пароли не совпадают"
+                        return render_template("private_profile_security.html", error=error)
+                else:
+                    error = "Слабый пароль. Пароль должен состоять по крайней мере из восьми символов, содержать " \
+                            "символы в " \
+                            "верхнем и нижнем регистрах и включать по крайней мере одну цифру"
+                    return render_template("private_profile_security.html", error=error)
+            else:
+                error = "Текущий пароль введён неверно"
+                return render_template("private_profile_security.html", error=error)
+            try:
+                error = "Изменения успешно сохранены"
                 db.session.commit()
-                return redirect('/private_profile_security')
+                return render_template("private_profile_security.html", error=error)
+            except:
+                return "При редактировании пользователя произошла ошибка"
+
     else:
-        return render_template("private_profile_security.html")
+        return render_template("private_profile_security.html", error=error)
+
+
+@app.route('/categoriesProducts')
+def categoriesProducts():
+    from products import Product
+    categories_products = Product.query.all()
+    print(categories_products)
+    return render_template('categories.html', categories=categories_products)
+
+
+# @app.route('/categories')
+# def categories():
+#     categories = Category.query.all()
+#     return render_template('categories.html', categories=categories)
+#
+#
+# @app.route('/category/<int:category_id>')
+# def category(category_id):
+#     if category_id == 'all':
+#         products = Product.query.all()
+#         category_name = 'All Products'
+#     else:
+#         category = Category.query.get_or_404(category_id)
+#         products = category.products
+#         category_name = category.name
+#     return render_template('category.html', products=products, category_name=category_name)
 
 
 @app.route('/private_profile_orders')
@@ -357,7 +442,6 @@ def private_profile_info():
             user.bornDate = datetime.strptime(request.form['bornDate'], '%Y-%m-%d')
         else:
             user.bornDate = None
-        user.phoneNumber = request.form.get('phoneNumber')
         user.address = request.form['address']
         user.info = request.form.get('info')
         try:
@@ -634,4 +718,9 @@ def create_article():
 
 
 if __name__ == "__main__":
+    from products import Product
+
+    categoriesProducts = Product.query.all()
+    for product in categoriesProducts:
+        print(product.model_line_id)
     app.run(debug=True)
